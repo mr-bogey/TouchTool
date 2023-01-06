@@ -1,0 +1,40 @@
+名称 ：  Android CI 
+
+上 ： 
+  发布 ： 
+    类型 ：  [已发布] 
+  推 ： 
+    分支机构 ： 
+- 主人 
+    标签 ： 
+      -  ' 2.* ' 
+  拉请求 ： 
+    分支机构 ： 
+- 主人 
+职位 ： 
+  构建 ： 
+
+    运行 ：  ubuntu-latest 
+
+    步骤 ： 
+- 使用 ： 动作/结账@v2 
+- 名称 ： 设置 JDK 1.8 
+        使用 ： 动作/设置-java@v1 
+        与 ： 
+          java版本 ：  1.8 
+- 名称 ： 发布apk标志 
+        运行 ：  | 
+          echo "给apk增加签名" 
+cp $GITHUB_WORKSPACE/.github/workflows/android.keystore $GITHUB_WORKSPACE/app/android.keystore 
+sed '$a\RELEASE_STORE_FILE=./android.keystore' $GITHUB_WORKSPACE/gradle.properties -i 
+- 名称 ： 使用 gradle 构建 
+        运行 ：  | 
+          echo "开始进行release构建" 
+chmod +x 毕业典礼 
+./gradlew 应用程序：assembleRelease 
+- 名称 ： 上传apk 
+        使用 ： 动作/上传-artifact@master 
+        如果 ： 总是（） 
+        与 ： 
+          名称 ：  xupdate_apk 
+          路径 ：  ${{ github.workspace }}/app/build/outputs/apk/release 
