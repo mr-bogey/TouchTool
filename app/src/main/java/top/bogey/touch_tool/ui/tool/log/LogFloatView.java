@@ -85,6 +85,7 @@ public class LogFloatView extends FrameLayout implements FloatInterface, LogSave
             });
             popup.setAdapter(arrayAdapter);
             popup.setAnchorView(binding.title);
+            popup.setHeight(Math.max(binding.recyclerView.getHeight(), 600));
             popup.setOnItemClickListener((parent, view, position, id) -> {
                 this.task = validTasks.get(position);
                 binding.title.setText(this.task.getTitle());
