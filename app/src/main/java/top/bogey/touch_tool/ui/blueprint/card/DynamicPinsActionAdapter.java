@@ -7,7 +7,6 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -21,6 +20,7 @@ import top.bogey.touch_tool.ui.blueprint.pin.PinTopView;
 import top.bogey.touch_tool.ui.blueprint.pin.PinView;
 import top.bogey.touch_tool.utils.ui.DragViewHolderHelper;
 import top.bogey.touch_tool.utils.ui.IDragAbleRecycleViewAdapter;
+import top.bogey.touch_tool.utils.ui.NoScrollLinearLayoutManager;
 
 // 一个方位上的全部针脚，界面顺序与动作的针脚列表保持一致
 // 动态添加的针脚长按可以调换顺序，默认针脚没有拖动柄、位置固定
@@ -59,7 +59,8 @@ public class DynamicPinsActionAdapter extends RecyclerView.Adapter<DynamicPinsAc
     public void attachToRecyclerView(RecyclerView recyclerView) {
         // 竖直针脚横向排布，普通针脚纵向排布
         int orientation = vertical ? RecyclerView.HORIZONTAL : RecyclerView.VERTICAL;
-        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext(), orientation, false));
+        // 列表按内容撑开，本来就没有可滚动的余量，留着滚动只会把针脚里文本框的手势抢走
+        recyclerView.setLayoutManager(new NoScrollLinearLayoutManager(recyclerView.getContext(), orientation, false));
         recyclerView.setAdapter(this);
         touchHelper.attachToRecyclerView(recyclerView);
     }

@@ -128,7 +128,7 @@
                     android:id="@+id/inPinBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                    app:layoutManager="top.bogey.touch_tool.utils.ui.NoScrollLinearLayoutManager" />
 
             </LinearLayout>
 
