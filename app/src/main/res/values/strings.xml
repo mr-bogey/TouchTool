@@ -287,6 +287,10 @@
     <string name="app_setting_enable_error">无障碍服务未启用</string>
     <string name="app_setting_enabled">功能已启用</string>
     <string name="app_setting_disable">功能已关闭</string>
+    <string name="setting_hero_on">已启用</string>
+    <string name="setting_hero_off">点此启用</string>
+    <string name="setting_value_current">当前：%1$d</string>
+    <string name="setting_value_current_text">当前：%1$s</string>
 
     <string name="app_setting_reload">重启无障碍服务</string>
     <string name="app_setting_reload_desc">关闭或清理当前无障碍服务，并重新启动无障碍服务</string>
@@ -300,6 +304,7 @@
     <string name="app_setting_auto_reload_desc">授予 写入安全设置 权限能够使应用自动重启无障碍服务</string>
     <string name="app_setting_auto_reload_title">写入安全设置权限</string>
     <string name="app_setting_auto_reload_message">请授予写入安全设置权限</string>
+    <string name="app_setting_write_secure_settings">写入安全设置</string>
 
 
     <string name="app_setting_hide_back">隐藏后台</string>
@@ -307,6 +312,8 @@
 
     <string name="app_setting_ignore_battery">忽略电量限制</string>
     <string name="app_setting_ignore_battery_desc">忽略电量限制来加强应用后台存活能力</string>
+    <string name="app_setting_ignore_battery_on">已忽略电量限制</string>
+    <string name="app_setting_ignore_battery_off">未忽略，点击前往设置</string>
 
     <string name="app_setting_forge_service">前台服务</string>
     <string name="app_setting_forge_service_desc">在通知栏显示一条前台服务通知加强应用后台存活能力</string>
@@ -317,7 +324,8 @@
     <string name="app_setting_auto_start_desc">手机开机后就能立即使用点击助手，无需打开软件</string>
 
     <string name="app_setting_auto_backup">自动备份</string>
-    <string name="app_setting_auto_backup_desc">设置自动备份所有任务的间隔时间。备份到“下载”目录\n(点击此处立即备份一次)</string>
+    <string name="app_setting_auto_backup_desc">设置自动备份所有任务的间隔时间，备份到“下载”目录</string>
+    <string name="app_setting_auto_backup_now">立即备份</string>
     <string name="app_setting_auto_backup_tips">已备份</string>
 
     <string name="app_setting_clean_cache">清理缓存</string>
@@ -402,6 +410,9 @@
     <string name="preference_setting_manual_play">手动执行</string>
     <string name="preference_setting_manual_play_desc_1">设置手动执行悬浮窗功能细节</string>
     <string name="preference_setting_manual_play_desc_2">启用手动执行决定手动执行悬浮窗是否或何时显示，手动执行悬浮窗只在关联应用或界面打开时才显示。</string>
+    <string name="manual_play_group_action">操作</string>
+    <string name="manual_play_group_display">显示</string>
+    <string name="manual_play_group_size">尺寸</string>
 
     <string name="preference_setting_manual_play_pause">暂停/停止</string>
     <string name="preference_setting_manual_play_pause_desc">设置任务运行时执行按钮“短按/长按”功能</string>

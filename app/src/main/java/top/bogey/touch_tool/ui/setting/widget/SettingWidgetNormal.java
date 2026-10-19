@@ -9,6 +9,8 @@ import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.android.material.color.MaterialColors;
+
 import top.bogey.touch_tool.R;
 import top.bogey.touch_tool.databinding.WidgetSettingNormalBinding;
 
@@ -29,6 +31,11 @@ public class SettingWidgetNormal extends FrameLayout {
             String description = typedArray.getString(R.styleable.SettingWidgetNormal_description);
             binding.description.setText(description);
             binding.description.setVisibility(description == null || description.isEmpty() ? GONE : VISIBLE);
+
+            // 说明即当前状态时用主色强调
+            if (typedArray.getBoolean(R.styleable.SettingWidgetNormal_descriptionAccent, false)) {
+                binding.description.setTextColor(MaterialColors.getColor(binding.description, androidx.appcompat.R.attr.colorPrimary));
+            }
         }
     }
 

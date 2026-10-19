@@ -21,11 +21,20 @@
     <attr name="icon" format="reference" />
     <attr name="title" format="string" />
     <attr name="description" format="string" />
+    <attr name="descriptionAccent" format="boolean" />
+    <attr name="collapsible" format="boolean" />
+
+    <declare-styleable name="SettingWidgetHero">
+        <attr name="icon" />
+        <attr name="title" />
+        <attr name="description" />
+    </declare-styleable>
 
     <declare-styleable name="SettingWidgetNormal">
         <attr name="icon" />
         <attr name="title" />
         <attr name="description" />
+        <attr name="descriptionAccent" />
     </declare-styleable>
 
     <declare-styleable name="SettingWidgetSwitch">
@@ -39,6 +48,8 @@
         <attr name="title" />
         <attr name="description" />
         <attr name="options" format="reference" />
+        <attr name="collapsible" />
+        <attr name="cornerText" format="string" />
     </declare-styleable>
 
     <declare-styleable name="SettingWidgetSlider">
@@ -49,6 +60,7 @@
         <attr name="max" format="integer" />
         <attr name="step" format="integer" />
         <attr name="value" format="integer" />
+        <attr name="collapsible" />
     </declare-styleable>
 
     <declare-styleable name="ToolWidgetButton">

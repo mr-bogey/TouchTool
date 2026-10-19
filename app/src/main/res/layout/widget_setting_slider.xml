@@ -47,9 +47,18 @@
 
             </LinearLayout>
 
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/arrow"
+                style="@style/Widget.Material3.ImageView.ListItem.LeadingIcon"
+                android:layout_width="?attr/smallIconButtonSize"
+                android:layout_height="?attr/smallIconButtonSize"
+                android:visibility="gone"
+                app:srcCompat="@drawable/icon_keyboard_arrow_down" />
+
         </LinearLayout>
 
         <FrameLayout
+            android:id="@+id/sliderBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="?attr/iconButtonSize"

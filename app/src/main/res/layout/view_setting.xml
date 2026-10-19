@@ -32,21 +32,23 @@
             android:orientation="vertical"
             android:padding="?attr/defaultPadding">
 
+            <top.bogey.touch_tool.ui.setting.widget.SettingWidgetHero
+                android:id="@+id/enableHero"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:description="@string/app_setting_enable_desc"
+                app:icon="@drawable/icon_app"
+                app:title="@string/app_setting_enable" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="?attr/defaultPadding" />
+
             <com.google.android.material.card.MaterialCardView
                 style="?attr/materialCardViewFilledStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Large">
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/versionText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_margin="?attr/defaultPadding"
-                    android:alpha="0.1"
-                    android:gravity="end"
-                    android:textSize="24sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -54,61 +56,32 @@
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
                         <Space
                             android:layout_width="?attr/minTouchTargetSize"
                             android:layout_height="wrap_content" />
 
                         <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_margin="?attr/defaultPadding"
+                            android:layout_weight="1"
                             android:text="@string/app_setting"
                             android:textSize="12sp" />
 
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/versionText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="?attr/defaultPadding"
+                            android:textAppearance="?attr/textAppearanceLabelMedium"
+                            android:textColor="?attr/colorOnSurfaceVariant" />
+
                     </LinearLayout>
-
-                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
-                        android:id="@+id/enableSwitch"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:description="@string/app_setting_enable_desc"
-                        app:icon="@drawable/icon_app"
-                        app:title="@string/app_setting_enable" />
-
-                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetNormal
-                        android:id="@+id/reloadService"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:description="@string/app_setting_reload_desc"
-                        app:icon="@drawable/icon_refresh"
-                        app:title="@string/app_setting_reload" />
-
-                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetNormal
-                        android:id="@+id/autoReloadService"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:description="@string/app_setting_auto_reload_desc"
-                        app:icon="@drawable/icon_refresh"
-                        app:title="@string/app_setting_auto_reload" />
-
-                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
-                        android:id="@+id/hideBackSwitch"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:description="@string/app_setting_hide_back_desc"
-                        app:icon="@drawable/icon_visibility_off"
-                        app:title="@string/app_setting_hide_back" />
-
-                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
-                        android:id="@+id/ignoreBatterySwitch"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:description="@string/app_setting_ignore_battery_desc"
-                        app:icon="@drawable/icon_battery_android_full"
-                        app:title="@string/app_setting_ignore_battery" />
 
                     <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
                         android:id="@+id/forgeServiceSwitch"
@@ -118,10 +91,29 @@
                         app:icon="@drawable/icon_notifications"
                         app:title="@string/app_setting_forge_service" />
 
+                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
+                        android:id="@+id/hideBackSwitch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:description="@string/app_setting_hide_back_desc"
+                        app:icon="@drawable/icon_visibility_off"
+                        app:title="@string/app_setting_hide_back" />
+
+                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetNormal
+                        android:id="@+id/ignoreBatterySetting"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:description="@string/app_setting_ignore_battery_desc"
+                        app:descriptionAccent="true"
+                        app:icon="@drawable/icon_battery_android_full"
+                        app:title="@string/app_setting_ignore_battery" />
+
                     <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSelect
                         android:id="@+id/autoBackupSelect"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:collapsible="true"
+                        app:cornerText="@string/app_setting_auto_backup_now"
                         app:description="@string/app_setting_auto_backup_desc"
                         app:icon="@drawable/icon_save"
                         app:options="@array/auto_backup_days"
@@ -132,6 +124,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:description="@string/app_setting_clean_cache_desc"
+                        app:descriptionAccent="true"
                         app:icon="@drawable/icon_delete"
                         app:title="@string/app_setting_clean_cache" />
 
@@ -175,6 +168,7 @@
                         android:id="@+id/superUserSelect"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:collapsible="true"
                         app:description="@string/permission_setting_super_user_desc"
                         app:icon="@drawable/icon_adb"
                         app:options="@array/super_user_type"
@@ -184,6 +178,7 @@
                         android:id="@+id/notificationTypeSelect"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:collapsible="true"
                         app:description="@string/permission_setting_notification_type_desc"
                         app:icon="@drawable/icon_notifications_active"
                         app:options="@array/notification_source_type"
@@ -345,6 +340,7 @@
                         android:id="@+id/cardTypeSelect"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:collapsible="true"
                         app:description="@string/blueprint_setting_card_default_desc"
                         app:icon="@drawable/icon_visibility"
                         app:options="@array/card_default_type"
@@ -354,6 +350,7 @@
                         android:id="@+id/arrangeCardOffset"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:collapsible="true"
                         app:description="@string/blueprint_setting_arrange_card_offset_desc"
                         app:icon="@drawable/icon_straighten"
                         app:max="5"
@@ -417,6 +414,7 @@
                         android:id="@+id/themeSelect"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:collapsible="true"
                         app:icon="@drawable/icon_dark_mode"
                         app:options="@array/theme_type"
                         app:title="@string/preference_setting_theme" />

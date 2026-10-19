@@ -47,6 +47,28 @@
 
             </LinearLayout>
 
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/corner"
+                android:layout_width="wrap_content"
+                android:layout_height="?attr/smallIconButtonSize"
+                android:layout_marginEnd="?attr/defaultPadding"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:gravity="center"
+                android:maxLines="1"
+                android:paddingHorizontal="?attr/defaultPadding"
+                android:textAppearance="?attr/textAppearanceLabelMedium"
+                android:visibility="gone" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/arrow"
+                style="@style/Widget.Material3.ImageView.ListItem.LeadingIcon"
+                android:layout_width="?attr/smallIconButtonSize"
+                android:layout_height="?attr/smallIconButtonSize"
+                android:visibility="gone"
+                app:srcCompat="@drawable/icon_keyboard_arrow_down" />
+
         </LinearLayout>
 
         <com.google.android.material.button.MaterialButtonToggleGroup

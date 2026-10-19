@@ -44,10 +44,30 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <Space
+                            android:layout_width="?attr/minTouchTargetSize"
+                            android:layout_height="wrap_content" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="?attr/defaultPadding"
+                            android:layout_weight="1"
+                            android:text="@string/manual_play_group_action"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
                     <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSelect
                         android:id="@+id/manualPlaySelect"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:collapsible="true"
                         app:description="@string/preference_setting_manual_play_desc_2"
                         app:icon="@drawable/icon_touch_app"
                         app:options="@array/manual_play_type"
@@ -57,6 +77,7 @@
                         android:id="@+id/manualPlayPauseSelect"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:collapsible="true"
                         app:description="@string/preference_setting_manual_play_pause_desc"
                         app:icon="@drawable/icon_pause"
                         app:options="@array/manual_play_pause_type"
@@ -97,10 +118,30 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <Space
+                            android:layout_width="?attr/minTouchTargetSize"
+                            android:layout_height="wrap_content" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="?attr/defaultPadding"
+                            android:layout_weight="1"
+                            android:text="@string/manual_play_group_display"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
                     <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSelect
                         android:id="@+id/hideManualPlaySelect"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:collapsible="true"
                         app:description="@string/preference_setting_manual_play_hide_desc"
                         app:icon="@drawable/icon_visibility_off"
                         app:options="@array/manual_play_hide_type"
@@ -134,6 +175,7 @@
                         android:id="@+id/notPlayHideAlpha"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:collapsible="true"
                         app:description="@string/preference_setting_manual_not_play_hide_alpha_desc"
                         app:icon="@drawable/icon_symptoms"
                         app:max="80"
@@ -335,10 +377,30 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <Space
+                            android:layout_width="?attr/minTouchTargetSize"
+                            android:layout_height="wrap_content" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="?attr/defaultPadding"
+                            android:layout_weight="1"
+                            android:text="@string/manual_play_group_size"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
                     <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSlider
                         android:id="@+id/manualPlayPadding"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:collapsible="true"
                         app:description="@string/preference_setting_manual_play_padding_desc"
                         app:icon="@drawable/icon_mobile"
                         app:max="10"
@@ -349,6 +411,7 @@
                         android:id="@+id/manualPlaySize"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:collapsible="true"
                         app:description="@string/preference_setting_manual_play_size_desc"
                         app:icon="@drawable/icon_zoom_out_map"
                         app:max="3"
@@ -360,6 +423,7 @@
                         android:id="@+id/manualPlayHeight"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:collapsible="true"
                         app:description="@string/preference_setting_manual_play_height_desc"
                         app:icon="@drawable/icon_straighten"
                         app:max="3"
@@ -372,6 +436,7 @@
                         android:id="@+id/manualPlayCloseSize"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:collapsible="true"
                         app:description="@string/preference_setting_manual_play_close_size_desc"
                         app:icon="@drawable/icon_zoom_in_map"
                         app:max="3"
@@ -383,6 +448,7 @@
                         android:id="@+id/manualPlaySingleSize"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:collapsible="true"
                         app:description="@string/preference_setting_manual_play_single_size_desc"
                         app:icon="@drawable/icon_area"
                         app:max="3"

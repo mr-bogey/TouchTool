@@ -91,6 +91,17 @@ public class SettingView extends Fragment {
         getParentFragmentManager().beginTransaction().attach(this).commitAllowingStateLoss();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        // 从系统设置返回后刷新服务状态、角标权限与忽略电量
+        if (binding == null || !isAdded()) return;
+        MainAccessibilityService serv = MainApplication.getInstance().getService();
+        binding.enableHero.setChecked(serv != null && serv.isEnabled());
+        refreshHeroCorner((MainActivity) requireActivity());
+        refreshIgnoreBattery();
+    }
+
     @SuppressLint("SetTextI18n")
     @Nullable
     @Override
@@ -101,19 +112,18 @@ public class SettingView extends Fragment {
 
         binding.toolBar.addMenuProvider(menuProvider, getViewLifecycleOwner());
 
-        // 功能启用
-        binding.enableSwitch.setOnSwitchClickListener(v -> {
+        // 功能启用：点击整块切换服务开关
+        binding.enableHero.setOnClickListener(v -> {
             MainAccessibilityService service = MainApplication.getInstance().getService();
             boolean enable = false;
-            if (binding.enableSwitch.isChecked()) {
+            if (!binding.enableHero.isChecked()) {
                 if (AppUtil.isAccessibilityServiceEnabled(activity)) {
                     if (service != null) {
                         enable = true;
                         service.setEnabled(true);
-                    } else {
-                        binding.enableSwitch.setChecked(false);
                     }
                 } else {
+                    // 无障碍未开启时只做引导，不写入总开关
                     if (SettingSaver.SHOW_APP_SERVICE_ENABLE_TIPS.get()) {
                         startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
                     } else {
@@ -124,86 +134,33 @@ public class SettingView extends Fragment {
                         });
                         SettingSaver.SHOW_APP_SERVICE_ENABLE_TIPS.set(true);
                     }
-                    binding.enableSwitch.setChecked(false);
                 }
             } else {
                 if (service != null) {
                     service.setEnabled(false);
                 }
             }
+            binding.enableHero.setChecked(enable);
             SettingSaver.APP_SERVICE.set(enable);
         });
 
         MainAccessibilityService serv = MainApplication.getInstance().getService();
-        binding.enableSwitch.setChecked(serv != null && serv.isEnabled());
-
-        // 重启服务
-        binding.reloadService.setOnClickListener(v -> {
-            binding.reloadService.setEnabled(false);
-
-            if (activity.stopAccessibilityServiceBySecurePermission()) {
-                binding.getRoot().postDelayed(() -> {
-                    SettingSaver.APP_SERVICE.set(true);
-                    activity.restartAccessibilityServiceBySecurePermission();
-                    Toast.makeText(activity, R.string.app_setting_reload_success, Toast.LENGTH_SHORT).show();
-                    try {
-                        binding.enableSwitch.setChecked(true);
-                        binding.reloadService.setEnabled(true);
-                    } catch (Exception ignored) {
-                    }
-                }, 1000);
-            } else {
-                Toast.makeText(activity, R.string.app_setting_reload_error, Toast.LENGTH_SHORT).show();
-                binding.reloadService.setEnabled(true);
-            }
-        });
-        refreshReloadService();
-
-        // 自动重启服务
-        binding.autoReloadService.setOnClickListener(v -> {
-
-            MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext())
-                    .setTitle(R.string.app_setting_auto_reload_title)
-                    .setMessage(R.string.app_setting_auto_reload_message);
-            String cmd = String.format("pm grant %s %s", requireActivity().getPackageName(), Manifest.permission.WRITE_SECURE_SETTINGS);
-            if (SuperUser.getInstance().isValid()) {
-                builder.setPositiveButton(R.string.setting_execute_shell, (dialog, which) -> {
-                            SuperUser.getInstance().runCommand(cmd);
-                            binding.getRoot().postDelayed(() -> {
-                                refreshReloadService();
-                                refreshAutoReloadService();
-                            }, 500);
-                        })
-                        .setNegativeButton(R.string.setting_copy_shell, (dialog, which) -> AppUtil.copyToClipboard(requireContext(), cmd))
-                        .setNeutralButton(R.string.cancel, null)
-                        .show();
-            } else {
-                builder.setPositiveButton(R.string.setting_copy_shell, (dialog, which) -> AppUtil.copyToClipboard(requireContext(), cmd))
-                        .setNegativeButton(R.string.cancel, null)
-                        .show();
-            }
-        });
-        refreshAutoReloadService();
+        binding.enableHero.setChecked(serv != null && serv.isEnabled());
+        refreshHeroCorner(activity);
 
         // 隐藏后台
         binding.hideBackSwitch.setOnSwitchClickListener(v -> SettingSaver.APP_HIDE_ACTIVITY_BACKGROUND.set(activity, binding.hideBackSwitch.isChecked()));
         binding.hideBackSwitch.setChecked(SettingSaver.APP_HIDE_ACTIVITY_BACKGROUND.get());
 
-        // 忽略电量限制
-        binding.ignoreBatterySwitch.setOnSwitchClickListener(v -> {
-            if (binding.ignoreBatterySwitch.isChecked()) {
-                if (!AppUtil.isIgnoredBattery(activity)) {
-                    AppUtil.gotoIgnoreBattery(activity);
-                    binding.ignoreBatterySwitch.setChecked(false);
-                }
+        // 忽略电量限制：已忽略则去应用详情，否则去授权页
+        binding.ignoreBatterySetting.setOnClickListener(v -> {
+            if (AppUtil.isIgnoredBattery(activity)) {
+                AppUtil.gotoAppDetailView(activity);
             } else {
-                if (AppUtil.isIgnoredBattery(activity)) {
-                    AppUtil.gotoAppDetailView(activity);
-                    binding.ignoreBatterySwitch.setChecked(true);
-                }
+                AppUtil.gotoIgnoreBattery(activity);
             }
         });
-        binding.ignoreBatterySwitch.setChecked(AppUtil.isIgnoredBattery(activity));
+        refreshIgnoreBattery();
 
         // 前台服务
         binding.forgeServiceSwitch.setOnSwitchClickListener(v -> SettingSaver.APP_KEEP_ALIVE_SERVICE.set(activity, binding.forgeServiceSwitch.isChecked()));
@@ -222,7 +179,7 @@ public class SettingView extends Fragment {
             }
         });
         binding.autoBackupSelect.checkIndex(SettingSaver.TASK_AUTO_BACKUP.get());
-        binding.autoBackupSelect.setOnClickListener(v -> {
+        binding.autoBackupSelect.setOnCornerClickListener(v -> {
             ExportTaskDialog.autoBackup(activity);
             Toast.makeText(activity, R.string.app_setting_auto_backup_tips, Toast.LENGTH_SHORT).show();
         });
@@ -284,7 +241,7 @@ public class SettingView extends Fragment {
                     });
                 }
                 refreshNotificationCmd();
-                refreshAutoReloadService();
+                refreshHeroCorner(activity);
             }
         });
         binding.superUserSelect.checkIndex(SettingSaver.PERMISSION_SUPER_USER.get());
@@ -474,13 +431,58 @@ public class SettingView extends Fragment {
         binding.notificationTypeCmd.setVisibility(notificationType == 1 && version ? View.VISIBLE : View.GONE);
     }
 
-    private void refreshReloadService() {
-        boolean granted = requireActivity().checkSelfPermission(Manifest.permission.WRITE_SECURE_SETTINGS) == PackageManager.PERMISSION_GRANTED;
-        binding.reloadService.setVisibility(granted ? View.VISIBLE : View.GONE);
+    // 有写安全设置权限时角标是「重启」，没有时引导去写入权限
+    private void refreshHeroCorner(MainActivity activity) {
+        boolean granted = activity.checkSelfPermission(Manifest.permission.WRITE_SECURE_SETTINGS) == PackageManager.PERMISSION_GRANTED;
+        if (granted) {
+            binding.enableHero.setCornerText(getString(R.string.app_setting_reload_button_text));
+            binding.enableHero.setCornerSubtle(false);
+            binding.enableHero.setOnCornerClickListener(v -> {
+                v.setEnabled(false);
+                if (activity.stopAccessibilityServiceBySecurePermission()) {
+                    binding.getRoot().postDelayed(() -> {
+                        SettingSaver.APP_SERVICE.set(true);
+                        activity.restartAccessibilityServiceBySecurePermission();
+                        Toast.makeText(activity, R.string.app_setting_reload_success, Toast.LENGTH_SHORT).show();
+                        try {
+                            binding.enableHero.setChecked(true);
+                            v.setEnabled(true);
+                        } catch (Exception ignored) {
+                        }
+                    }, 1000);
+                } else {
+                    Toast.makeText(activity, R.string.app_setting_reload_error, Toast.LENGTH_SHORT).show();
+                    v.setEnabled(true);
+                }
+            });
+        } else {
+            binding.enableHero.setCornerText(getString(R.string.app_setting_write_secure_settings));
+            binding.enableHero.setCornerSubtle(true);
+            binding.enableHero.setOnCornerClickListener(v -> {
+                MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext())
+                        .setTitle(R.string.app_setting_auto_reload_title)
+                        .setMessage(R.string.app_setting_auto_reload_message);
+                String cmd = String.format("pm grant %s %s", activity.getPackageName(), Manifest.permission.WRITE_SECURE_SETTINGS);
+                if (SuperUser.getInstance().isValid()) {
+                    builder.setPositiveButton(R.string.setting_execute_shell, (dialog, which) -> {
+                                SuperUser.getInstance().runCommand(cmd);
+                                binding.getRoot().postDelayed(() -> refreshHeroCorner(activity), 500);
+                            })
+                            .setNegativeButton(R.string.setting_copy_shell, (dialog, which) -> AppUtil.copyToClipboard(requireContext(), cmd))
+                            .setNeutralButton(R.string.cancel, null)
+                            .show();
+                } else {
+                    builder.setPositiveButton(R.string.setting_copy_shell, (dialog, which) -> AppUtil.copyToClipboard(requireContext(), cmd))
+                            .setNegativeButton(R.string.cancel, null)
+                            .show();
+                }
+            });
+        }
     }
 
-    private void refreshAutoReloadService() {
-        boolean granted = requireActivity().checkSelfPermission(Manifest.permission.WRITE_SECURE_SETTINGS) == PackageManager.PERMISSION_GRANTED;
-        binding.autoReloadService.setVisibility(granted ? View.GONE : View.VISIBLE);
+    // 忽略电量行的说明随当前状态变化
+    private void refreshIgnoreBattery() {
+        boolean ignored = AppUtil.isIgnoredBattery(requireContext());
+        binding.ignoreBatterySetting.setDescription(getString(ignored ? R.string.app_setting_ignore_battery_on : R.string.app_setting_ignore_battery_off));
     }
 }
