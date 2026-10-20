@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -34,6 +35,10 @@ public class DynamicColor extends SettingSave<Boolean> {
             @Override
             public void onActivityPreCreated(@NonNull Activity activity, @Nullable Bundle savedInstanceState) {
                 super.onActivityPreCreated(activity, savedInstanceState);
+                // 系统调色板颜色是写死在主题资源里的，material 的可用性判定却带厂商白名单，非白名单 ROM 上会直接跳过，这里按资源再套一次
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && get()) {
+                    activity.getTheme().applyStyle(com.google.android.material.R.style.ThemeOverlay_Material3Expressive_DynamicColors_DayNight, true);
+                }
                 DynamicColors.applyToActivityIfAvailable(activity, getDynamicColorOptions());
             }
         });
