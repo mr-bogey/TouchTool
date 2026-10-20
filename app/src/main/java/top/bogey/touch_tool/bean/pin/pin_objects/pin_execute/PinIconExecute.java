@@ -13,6 +13,7 @@ import java.util.Objects;
 import top.bogey.touch_tool.MainApplication;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinBase;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinSubType;
+import top.bogey.touch_tool.utils.AppLog;
 import top.bogey.touch_tool.utils.DisplayUtil;
 import top.bogey.touch_tool.utils.GsonUtil;
 
@@ -36,7 +37,7 @@ public class PinIconExecute extends PinStringExecute {
                 byte[] bytes = Base64.decode(image, Base64.NO_WRAP);
                 bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
             } catch (Exception | Error e) {
-                e.printStackTrace();
+                AppLog.e(e);
             }
         }
         return bitmap;
@@ -57,7 +58,7 @@ public class PinIconExecute extends PinStringExecute {
             byte[] bytes = stream.toByteArray();
             this.image = Base64.encodeToString(bytes, Base64.NO_WRAP);
         } catch (IOException e) {
-            e.printStackTrace();
+            AppLog.e(e);
         }
     }
 

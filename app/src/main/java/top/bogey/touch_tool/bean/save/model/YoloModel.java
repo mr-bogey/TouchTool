@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.RectF;
 import android.net.Uri;
-import android.util.Log;
 
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -18,6 +17,7 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import top.bogey.touch_tool.utils.AppLog;
 import top.bogey.touch_tool.utils.GsonUtil;
 
 public class YoloModel extends LiteRTModel {
@@ -57,7 +57,7 @@ public class YoloModel extends LiteRTModel {
                             outputStream.write(buffer, 0, length);
                         }
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        AppLog.e(e);
                     }
 
                     hasModel = true;
@@ -66,7 +66,7 @@ public class YoloModel extends LiteRTModel {
             }
             return hasModel;
         } catch (Exception e) {
-            e.printStackTrace();
+            AppLog.e(e);
             return false;
         }
     }
@@ -126,7 +126,7 @@ public class YoloModel extends LiteRTModel {
         }
 
         // 这时的区域是百分比的区域，需要转换成实际的区域
-        Log.d("TAG", "execute yolo: " + resultList);
+        AppLog.d("模型", "execute yolo: " + resultList);
 
         resultList.forEach(result -> {
             RectF area = result.getArea();

@@ -58,7 +58,7 @@ public class GsonUtil {
             try {
                 return gson.fromJson(jsonObject.get(key), clazz);
             } catch (Exception e) {
-                e.printStackTrace();
+                AppLog.e(e);
             }
         }
         return defaultValue;
@@ -69,7 +69,7 @@ public class GsonUtil {
             try {
                 return gson.fromJson(jsonObject.get(key), typeOfSrc);
             } catch (Exception e) {
-                e.printStackTrace();
+                AppLog.e(e);
             }
         }
         return defaultValue;
@@ -80,7 +80,7 @@ public class GsonUtil {
             try {
                 return gson.fromJson(json, clazz);
             } catch (Exception e) {
-                e.printStackTrace();
+                AppLog.e(e);
             }
         }
         return defaultValue;
@@ -91,7 +91,7 @@ public class GsonUtil {
             try {
                 return gson.fromJson(json, typeOfSrc);
             } catch (Exception e) {
-                e.printStackTrace();
+                AppLog.e(e);
             }
         }
         return defaultValue;
@@ -102,7 +102,7 @@ public class GsonUtil {
             try {
                 return jsonObject.get(key).getAsInt();
             } catch (Exception e) {
-                e.printStackTrace();
+                AppLog.e(e);
             }
         }
         return defaultValue;
@@ -113,7 +113,7 @@ public class GsonUtil {
             try {
                 return jsonObject.get(key).getAsFloat();
             } catch (Exception e) {
-                e.printStackTrace();
+                AppLog.e(e);
             }
         }
         return defaultValue;
@@ -124,7 +124,7 @@ public class GsonUtil {
             try {
                 return jsonObject.get(key).getAsLong();
             } catch (Exception e) {
-                e.printStackTrace();
+                AppLog.e(e);
             }
         }
         return defaultValue;
@@ -135,7 +135,7 @@ public class GsonUtil {
             try {
                 return jsonObject.get(key).getAsDouble();
             } catch (Exception e) {
-                e.printStackTrace();
+                AppLog.e(e);
             }
         }
         return defaultValue;
@@ -146,7 +146,7 @@ public class GsonUtil {
             try {
                 return jsonObject.get(key).getAsBoolean();
             } catch (Exception e) {
-                e.printStackTrace();
+                AppLog.e(e);
             }
         }
         return defaultValue;
@@ -158,7 +158,7 @@ public class GsonUtil {
             try {
                 return jsonObject.get(key).getAsString();
             } catch (Exception e) {
-                e.printStackTrace();
+                AppLog.e(e);
             }
         }
         return defaultValue;

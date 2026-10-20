@@ -13,7 +13,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -31,6 +30,7 @@ import java.util.Set;
 
 import top.bogey.touch_tool.R;
 import top.bogey.touch_tool.bean.save.setting.SettingSaver;
+import top.bogey.touch_tool.utils.AppLog;
 import top.bogey.touch_tool.utils.AppUtil;
 import top.bogey.touch_tool.utils.callback.ActivityResultCallback;
 
@@ -51,7 +51,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.d("BaseActivity", "onCreate: " + this.getClass().getName());
+        AppLog.d("BaseActivity", "onCreate: " + this.getClass().getName());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             WindowManager.LayoutParams params = getWindow().getAttributes();
@@ -107,32 +107,32 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d("BaseActivity", "onStart: " + this.getClass().getName());
+        AppLog.d("BaseActivity", "onStart: " + this.getClass().getName());
         restartAccessibilityServiceBySecurePermission();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("BaseActivity", "onResume: " + this.getClass().getName());
+        AppLog.d("BaseActivity", "onResume: " + this.getClass().getName());
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d("BaseActivity", "onPause: " + this.getClass().getName());
+        AppLog.d("BaseActivity", "onPause: " + this.getClass().getName());
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d("BaseActivity", "onStop: " + this.getClass().getName());
+        AppLog.d("BaseActivity", "onStop: " + this.getClass().getName());
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d("BaseActivity", "onDestroy: " + this.getClass().getName());
+        AppLog.d("BaseActivity", "onDestroy: " + this.getClass().getName());
         intentLauncher = null;
         permissionLauncher = null;
         openDocumentLauncher = null;
@@ -187,7 +187,7 @@ public class BaseActivity extends AppCompatActivity {
         try {
             openDocumentLauncher.launch(new String[]{mimeType});
         } catch (ActivityNotFoundException e) {
-            e.printStackTrace();
+            AppLog.e(e);
         }
     }
 
@@ -200,7 +200,7 @@ public class BaseActivity extends AppCompatActivity {
         try {
             createDocumentLauncher.launch(fileName);
         } catch (ActivityNotFoundException e) {
-            e.printStackTrace();
+            AppLog.e(e);
         }
     }
 
@@ -216,7 +216,7 @@ public class BaseActivity extends AppCompatActivity {
                     .setMediaType(type)
                     .build());
         } catch (ActivityNotFoundException e) {
-            e.printStackTrace();
+            AppLog.e(e);
         }
     }
 
@@ -234,7 +234,7 @@ public class BaseActivity extends AppCompatActivity {
         try {
             intentLauncher.launch(intent);
         } catch (ActivityNotFoundException e) {
-            e.printStackTrace();
+            AppLog.e(e);
         }
     }
 

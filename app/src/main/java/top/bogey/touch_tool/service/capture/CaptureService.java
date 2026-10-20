@@ -30,6 +30,7 @@ import java.nio.ByteBuffer;
 import top.bogey.touch_tool.MainApplication;
 import top.bogey.touch_tool.R;
 import top.bogey.touch_tool.service.MainAccessibilityService;
+import top.bogey.touch_tool.utils.AppLog;
 
 public class CaptureService extends Service {
     public static final String DATA = "DATA";
@@ -183,7 +184,7 @@ public class CaptureService extends Service {
                 if (image == null) return null;
                 bitmap = rgba8888ImageToBitmap(image);
             } catch (Exception | Error e) {
-                e.printStackTrace();
+                AppLog.e(e);
             }
             return bitmap;
         }

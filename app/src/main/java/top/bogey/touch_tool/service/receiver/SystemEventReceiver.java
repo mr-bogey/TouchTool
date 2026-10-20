@@ -11,7 +11,6 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.Uri;
 import android.os.BatteryManager;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -26,6 +25,7 @@ import top.bogey.touch_tool.service.MainAccessibilityService;
 import top.bogey.touch_tool.service.TaskInfoSummary;
 import top.bogey.touch_tool.ui.InstantActivity;
 import top.bogey.touch_tool.ui.tool.task_manager.ExportTaskDialog;
+import top.bogey.touch_tool.utils.AppLog;
 import top.bogey.touch_tool.utils.AppUtil;
 
 public class SystemEventReceiver extends BroadcastReceiver {
@@ -66,7 +66,7 @@ public class SystemEventReceiver extends BroadcastReceiver {
 
             case MainAccessibilityService.INTENT_KEY_DELETE_URI -> {
                 Uri uri = intent.getParcelableExtra(MainAccessibilityService.URI);
-                Log.d("TAG", "onReceive: " + uri);
+                AppLog.d("系统", "onReceive: " + uri);
                 if (uri == null) return;
                 context.getContentResolver().delete(uri, null, null);
             }

@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
-    app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Large">
+    app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.LargeIncreased">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -73,19 +73,12 @@
 
         </LinearLayout>
 
-        <com.google.android.material.textview.MaterialTextView
+        <!-- 右上角只放图标，直接复用仓库现成的图标按钮样式，代码里只改底色与图标色 -->
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/corner"
-            android:layout_width="wrap_content"
-            android:layout_height="?attr/smallIconButtonSize"
+            style="@style/Theme.TouchTool.IconButton"
             android:layout_gravity="top|end"
             android:layout_margin="?attr/defaultPadding"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?attr/selectableItemBackgroundBorderless"
-            android:gravity="center"
-            android:maxLines="1"
-            android:paddingHorizontal="?attr/defaultPadding"
-            android:textAppearance="?attr/textAppearanceLabelMedium"
             android:visibility="gone" />
 
     </FrameLayout>

@@ -13,6 +13,7 @@ import top.bogey.touch_tool.databinding.PinWidgetPointBinding;
 import top.bogey.touch_tool.ui.blueprint.card.ActionCard;
 import top.bogey.touch_tool.ui.blueprint.picker.PointPickerPreview;
 import top.bogey.touch_tool.ui.blueprint.pin.PinView;
+import top.bogey.touch_tool.utils.AppLog;
 import top.bogey.touch_tool.utils.listener.TextChangedListener;
 
 @SuppressLint("ViewConstructor")
@@ -66,7 +67,7 @@ public class PinWidgetPoint extends PinWidget<PinPoint> {
         try {
             return Integer.parseInt(s.toString());
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            AppLog.e(e);
             return 0;
         }
     }

@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -18,22 +19,29 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.annotation.Nullable;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.google.android.material.chip.Chip;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import top.bogey.touch_tool.MainApplication;
 import top.bogey.touch_tool.R;
 import top.bogey.touch_tool.bean.save.setting.SettingSaver;
+import top.bogey.touch_tool.databinding.DialogLogBinding;
 import top.bogey.touch_tool.databinding.ViewSettingBinding;
 import top.bogey.touch_tool.service.MainAccessibilityService;
 import top.bogey.touch_tool.service.TaskInfoSummary;
@@ -45,7 +53,9 @@ import top.bogey.touch_tool.service.super_user.shizuku.ShizukuSuperUser;
 import top.bogey.touch_tool.ui.MainActivity;
 import top.bogey.touch_tool.ui.blueprint.picker.ColorPickerPreview;
 import top.bogey.touch_tool.ui.tool.task_manager.ExportTaskDialog;
+import top.bogey.touch_tool.utils.AppLog;
 import top.bogey.touch_tool.utils.AppUtil;
+import top.bogey.touch_tool.utils.DisplayUtil;
 
 public class SettingView extends Fragment {
     private ViewSettingBinding binding;
@@ -419,10 +429,103 @@ public class SettingView extends Fragment {
             PackageInfo packageInfo = packageManager.getPackageInfo(activity.getPackageName(), 0);
             binding.versionText.setText(packageInfo.versionName + "(" + packageInfo.versionCode + ")");
         } catch (Exception e) {
-            e.printStackTrace();
+            AppLog.e(e);
         }
+        // 点击版本号查看应用内日志
+        binding.versionText.setOnClickListener(v -> showLogDialog());
 
         return binding.getRoot();
+    }
+
+    // 版本号弹窗：查看应用内日志，纯文本展示时间、分类、标签与内容，可按分类筛选
+    private void showLogDialog() {
+        List<AppLog.Entry> logs = AppLog.getLogs();
+
+        DialogLogBinding dialogBinding = DialogLogBinding.inflate(getLayoutInflater());
+        LogAdapter adapter = new LogAdapter();
+        adapter.setLogs(logs);
+        dialogBinding.recyclerView.setAdapter(adapter);
+        refreshLogEmpty(dialogBinding, adapter);
+
+        // 分类筛选：全部加日志里出现过的分类，单选
+        List<String> categories = new ArrayList<>();
+        categories.add(null);
+        for (AppLog.Entry log : logs) {
+            if (!categories.contains(log.category())) categories.add(log.category());
+        }
+        for (String category : categories) {
+            Chip chip = new Chip(requireContext());
+            chip.setText(category == null ? getString(R.string.app_setting_log_filter_all) : category);
+            chip.setCheckable(true);
+            chip.setCheckedIconVisible(true);
+            chip.setChecked(category == null);
+            chip.setOnClickListener(v -> {
+                adapter.setCategoryFilter(category);
+                refreshLogEmpty(dialogBinding, adapter);
+            });
+            dialogBinding.categoryGroup.addView(chip);
+        }
+
+        AlertDialog dialog = new MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.app_setting_log_title)
+                .setView(dialogBinding.getRoot())
+                .setNeutralButton(R.string.clear, (dialog1, which) -> AppLog.clear())
+                .setPositiveButton(R.string.close, null)
+                .create();
+        // 宽高按屏幕比例定尺：宽度定死内容才会按固定宽度测量，否则卡片按文字宽度收缩、撑不满整宽；
+        // 高度取屏幕可用高度的七成，列表撑满剩余部分，只有数条时不至于把窗口撑到全屏。
+        // 要在 show 之前设好，窗口首次布局就是目标尺寸；放到 show 之后再改会先按内容排一次、再跳到目标尺寸
+        Window window = dialog.getWindow();
+        if (window != null) {
+            Rect area = DisplayUtil.getScreenArea(requireContext());
+            WindowManager.LayoutParams params = window.getAttributes();
+            params.width = Math.round(area.width() * 0.9f);
+            params.height = Math.round(area.height() * 0.7f);
+            window.setAttributes(params);
+        }
+        dialog.setOnShowListener(d -> fillLogDialogHeight(dialog));
+        dialog.show();
+    }
+
+    // 日志只有几条时按钮会跟着内容上移，把自定义视图补到标题与按钮之外的剩余高度，按钮始终贴底
+    private void fillLogDialogHeight(AlertDialog dialog) {
+        View panel = dialog.findViewById(androidx.appcompat.R.id.parentPanel);
+        View custom = dialog.findViewById(androidx.appcompat.R.id.custom);
+        if (!(panel instanceof ViewGroup) || custom == null) return;
+        ViewGroup group = (ViewGroup) panel;
+        ViewGroup.LayoutParams panelParams = group.getLayoutParams();
+        panelParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+        group.setLayoutParams(panelParams);
+        // 先让标题与按钮按新高度排一遍，再量它们占掉的高度；窗口还没按目标高度排好时留着监听等下一次布局
+        int[] attempts = {0};
+        group.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                int used = 0;
+                for (int i = 0; i < group.getChildCount(); i++) {
+                    View child = group.getChildAt(i);
+                    if (child == custom.getParent() || child.getVisibility() == View.GONE) continue;
+                    used += child.getHeight();
+                    ViewGroup.LayoutParams childParams = child.getLayoutParams();
+                    if (childParams instanceof ViewGroup.MarginLayoutParams) {
+                        ViewGroup.MarginLayoutParams marginParams = (ViewGroup.MarginLayoutParams) childParams;
+                        used += marginParams.topMargin + marginParams.bottomMargin;
+                    }
+                }
+                int height = group.getHeight() - used;
+                if (height <= 0 && attempts[0]++ < 3) return;
+                group.removeOnLayoutChangeListener(this);
+                if (height <= 0) return;
+                ViewGroup.LayoutParams customParams = custom.getLayoutParams();
+                customParams.height = height;
+                custom.setLayoutParams(customParams);
+            }
+        });
+    }
+
+    // 筛选后没有条目时显示空态
+    private void refreshLogEmpty(DialogLogBinding binding, LogAdapter adapter) {
+        binding.emptyText.setVisibility(adapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
 
     private void refreshNotificationCmd() {
@@ -431,12 +534,11 @@ public class SettingView extends Fragment {
         binding.notificationTypeCmd.setVisibility(notificationType == 1 && version ? View.VISIBLE : View.GONE);
     }
 
-    // 有写安全设置权限时角标是「重启」，没有时引导去写入权限
+    // 有写安全设置权限时角标是重启图标，没有时是写入权限的图标，两者同一套淡底配色
     private void refreshHeroCorner(MainActivity activity) {
         boolean granted = activity.checkSelfPermission(Manifest.permission.WRITE_SECURE_SETTINGS) == PackageManager.PERMISSION_GRANTED;
         if (granted) {
-            binding.enableHero.setCornerText(getString(R.string.app_setting_reload_button_text));
-            binding.enableHero.setCornerSubtle(false);
+            binding.enableHero.setCornerIcon(R.drawable.icon_refresh, getString(R.string.app_setting_reload_button_text));
             binding.enableHero.setOnCornerClickListener(v -> {
                 v.setEnabled(false);
                 if (activity.stopAccessibilityServiceBySecurePermission()) {
@@ -456,8 +558,7 @@ public class SettingView extends Fragment {
                 }
             });
         } else {
-            binding.enableHero.setCornerText(getString(R.string.app_setting_write_secure_settings));
-            binding.enableHero.setCornerSubtle(true);
+            binding.enableHero.setCornerIcon(R.drawable.icon_adb, getString(R.string.app_setting_write_secure_settings));
             binding.enableHero.setOnCornerClickListener(v -> {
                 MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext())
                         .setTitle(R.string.app_setting_auto_reload_title)

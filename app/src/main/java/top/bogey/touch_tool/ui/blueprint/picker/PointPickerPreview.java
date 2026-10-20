@@ -12,6 +12,7 @@ import top.bogey.touch_tool.MainApplication;
 import top.bogey.touch_tool.databinding.FloatPickerPointPreviewBinding;
 import top.bogey.touch_tool.service.MainAccessibilityService;
 import top.bogey.touch_tool.ui.custom.float_view.TouchPathFloatView;
+import top.bogey.touch_tool.utils.AppLog;
 import top.bogey.touch_tool.utils.callback.ResultCallback;
 import top.bogey.touch_tool.utils.listener.TextChangedListener;
 
@@ -66,7 +67,7 @@ public class PointPickerPreview extends BasePicker<Point> {
         try {
             return Integer.parseInt(s.toString());
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            AppLog.e(e);
             return 0;
         }
     }

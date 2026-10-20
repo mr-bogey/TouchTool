@@ -32,6 +32,7 @@ import top.bogey.touch_tool.bean.pin.pin_objects.pin_number.PinTime;
 import top.bogey.touch_tool.databinding.PinWidgetInputBinding;
 import top.bogey.touch_tool.ui.blueprint.card.ActionCard;
 import top.bogey.touch_tool.ui.blueprint.pin.PinView;
+import top.bogey.touch_tool.utils.AppLog;
 import top.bogey.touch_tool.utils.AppUtil;
 import top.bogey.touch_tool.utils.listener.TextChangedListener;
 
@@ -100,7 +101,7 @@ public class PinWidgetNumber extends PinWidget<PinNumber<?>> {
                             ((PinInteger) pinBase).setValue(i);
                             pinView.getPin().notifyValueUpdated(card.getTask());
                         } catch (NumberFormatException e) {
-                            e.printStackTrace();
+                            AppLog.e(e);
                             pinBase.reset();
                         }
                     }
@@ -117,7 +118,7 @@ public class PinWidgetNumber extends PinWidget<PinNumber<?>> {
                             ((PinFloat) pinBase).setValue(i);
                             pinView.getPin().notifyValueUpdated(card.getTask());
                         } catch (NumberFormatException e) {
-                            e.printStackTrace();
+                            AppLog.e(e);
                             pinBase.reset();
                         }
                     }
@@ -134,7 +135,7 @@ public class PinWidgetNumber extends PinWidget<PinNumber<?>> {
                             ((PinDouble) pinBase).setValue(i);
                             pinView.getPin().notifyValueUpdated(card.getTask());
                         } catch (NumberFormatException e) {
-                            e.printStackTrace();
+                            AppLog.e(e);
                             pinBase.reset();
                         }
                     }
@@ -151,7 +152,7 @@ public class PinWidgetNumber extends PinWidget<PinNumber<?>> {
                             ((PinLong) pinBase).setValue(i);
                             pinView.getPin().notifyValueUpdated(card.getTask());
                         } catch (NumberFormatException e) {
-                            e.printStackTrace();
+                            AppLog.e(e);
                             pinBase.reset();
                         }
                     }

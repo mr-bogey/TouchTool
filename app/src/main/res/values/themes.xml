@@ -21,6 +21,13 @@
         <item name="iconButtonOutlined">@style/Theme.TouchTool.IconButton.Outlined</item>
         <item name="iconButtonFilled">@style/Theme.TouchTool.IconButton.Filled</item>
         <item name="iconButtonTonal">@style/Theme.TouchTool.IconButton.Tonal</item>
+
+        <item name="listItemCardViewStyle">@style/Theme.TouchTool.ListItemCardView</item>
+    </style>
+
+    <!-- 行卡默认是透明底（只在选中/侧滑时着色），分组不再有背景后必须自己铺底色 -->
+    <style name="Theme.TouchTool.ListItemCardView" parent="Widget.Material3.ListItemCardView">
+        <item name="cardBackgroundColor">?attr/colorSurfaceContainerHighest</item>
     </style>
 
     <style name="Theme.TouchTool.Transparent">

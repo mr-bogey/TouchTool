@@ -1,8 +1,7 @@
 package top.bogey.touch_tool.service.super_user.shell;
 
-import android.util.Log;
-
 import top.bogey.touch_tool.service.super_user.CmdResult;
+import top.bogey.touch_tool.utils.AppLog;
 
 public class CommandShellSession extends ShellSession {
     private final static String EXIT_MARKER = "EXIT_MARKER";
@@ -20,7 +19,7 @@ public class CommandShellSession extends ShellSession {
             StringBuilder output = new StringBuilder();
             String line;
             while ((line = outputReader.readLine()) != null) {
-                Log.d("TAG", "runCommand readLine: " + line);
+                AppLog.d("Shell", "runCommand readLine: " + line);
                 if (line.startsWith(EXIT_MARKER)) {
                     int exitCode = Integer.parseInt(line.substring(EXIT_MARKER.length() + 1));
                     return new CmdResult(exitCode == 0, output.toString().trim());
@@ -31,7 +30,7 @@ public class CommandShellSession extends ShellSession {
             return new CmdResult(false, "");
 
         } catch (Exception e) {
-            e.printStackTrace();
+            AppLog.e(e);
             return new CmdResult(false, e.getMessage());
         }
     }

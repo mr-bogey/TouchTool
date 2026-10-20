@@ -16,6 +16,7 @@ import rikka.shizuku.Shizuku;
 import top.bogey.touch_tool.MainApplication;
 import top.bogey.touch_tool.service.super_user.CmdResult;
 import top.bogey.touch_tool.service.super_user.ISuperUser;
+import top.bogey.touch_tool.utils.AppLog;
 import top.bogey.touch_tool.utils.AppUtil;
 import top.bogey.touch_tool.utils.callback.BooleanResultCallback;
 
@@ -52,7 +53,7 @@ public class ShizukuSuperUser implements ISuperUser {
                     .debuggable(!AppUtil.isRelease(context))
                     .version(packageInfo.versionCode);
         } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+            AppLog.e(e);
         }
     }
 

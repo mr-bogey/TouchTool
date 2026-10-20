@@ -21,6 +21,7 @@ import top.bogey.touch_tool.bean.save.model.ModelResult;
 import top.bogey.touch_tool.bean.save.model.ModelSaver;
 import top.bogey.touch_tool.databinding.FloatPickerAreaPreviewBinding;
 import top.bogey.touch_tool.service.MainAccessibilityService;
+import top.bogey.touch_tool.utils.AppLog;
 import top.bogey.touch_tool.utils.DisplayUtil;
 import top.bogey.touch_tool.utils.callback.ResultCallback;
 import top.bogey.touch_tool.utils.listener.TextChangedListener;
@@ -137,7 +138,7 @@ public class AreaPickerPreview extends BasePicker<Rect> {
         try {
             return Integer.parseInt(s.toString());
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            AppLog.e(e);
             return 0;
         }
     }

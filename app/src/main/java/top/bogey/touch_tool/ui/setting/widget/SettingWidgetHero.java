@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -21,21 +20,16 @@ import top.bogey.touch_tool.databinding.WidgetSettingHeroBinding;
 
 /**
  * 整宽的大号主操作行，用于承载主要动作（功能启用）
- * 右上角可叠一个胶囊小按钮，底色与前景色和本行成对反用
+ * 右上角可叠一个纯图标按钮，图标染成本行的前景色
  */
 public class SettingWidgetHero extends FrameLayout {
     private final WidgetSettingHeroBinding binding;
-    private final GradientDrawable cornerBackground = new GradientDrawable();
 
     private boolean checked = false;
-    // 淡底样式：不是每个人都要用的动作，弱化角标存在感
-    private boolean cornerSubtle = false;
 
     public SettingWidgetHero(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         binding = WidgetSettingHeroBinding.inflate(LayoutInflater.from(context), this, true);
-        cornerBackground.setShape(GradientDrawable.RECTANGLE);
-        cornerBackground.setCornerRadius(dimen(R.attr.smallIconButtonSize) / 2f);
 
         try (TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SettingWidgetHero)) {
             int icon = typedArray.getResourceId(R.styleable.SettingWidgetHero_icon, 0);
@@ -74,14 +68,11 @@ public class SettingWidgetHero extends FrameLayout {
         refresh();
     }
 
-    public void setCornerText(String text) {
-        binding.corner.setVisibility(text == null || text.isEmpty() ? GONE : VISIBLE);
-        binding.corner.setText(text);
-        refresh();
-    }
-
-    public void setCornerSubtle(boolean subtle) {
-        this.cornerSubtle = subtle;
+    // 角标只显示图标，文字改成无障碍描述，避免在主按钮上再压一条胶囊
+    public void setCornerIcon(int iconRes, CharSequence description) {
+        binding.corner.setIconResource(iconRes);
+        binding.corner.setContentDescription(description);
+        binding.corner.setVisibility(iconRes == 0 ? GONE : VISIBLE);
         refresh();
     }
 
@@ -108,11 +99,9 @@ public class SettingWidgetHero extends FrameLayout {
         binding.state.setText(checked ? R.string.setting_hero_on : R.string.setting_hero_off);
         binding.description.setTextColor(withAlpha(contentColor, 0.78f));
 
-        int cornerBackgroundColor = cornerSubtle ? withAlpha(contentColor, 0.18f) : contentColor;
-        int cornerTextColor = cornerSubtle ? contentColor : containerColor;
-        cornerBackground.setColor(cornerBackgroundColor);
-        binding.corner.setBackground(cornerBackground);
-        binding.corner.setTextColor(cornerTextColor);
+        // 现成的图标按钮样式负责圆底与水波纹，这里只改底色和图标色
+        binding.corner.setBackgroundTintList(ColorStateList.valueOf(withAlpha(contentColor, 0.18f)));
+        binding.corner.setIconTint(ColorStateList.valueOf(contentColor));
 
         // 角标叠在右上角，显示时给内容让出位置
         int padding = dimen(R.attr.halfIconButtonSize);

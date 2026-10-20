@@ -23,6 +23,12 @@
     <attr name="description" format="string" />
     <attr name="descriptionAccent" format="boolean" />
     <attr name="collapsible" format="boolean" />
+    <attr name="rowCorner" format="enum">
+        <enum name="top" value="0" />
+        <enum name="middle" value="1" />
+        <enum name="bottom" value="2" />
+        <enum name="single" value="3" />
+    </attr>
 
     <declare-styleable name="SettingWidgetHero">
         <attr name="icon" />

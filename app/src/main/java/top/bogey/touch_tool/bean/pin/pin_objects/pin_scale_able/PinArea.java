@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 
 import top.bogey.touch_tool.MainApplication;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinType;
+import top.bogey.touch_tool.utils.AppLog;
 import top.bogey.touch_tool.utils.DisplayUtil;
 import top.bogey.touch_tool.utils.EAnchor;
 import top.bogey.touch_tool.utils.GsonUtil;
@@ -56,7 +57,7 @@ public class PinArea extends PinScaleAble<Rect> {
                 this.value = area;
                 return true;
             } catch (Exception e) {
-                e.printStackTrace();
+                AppLog.e(e);
             }
         }
         return false;

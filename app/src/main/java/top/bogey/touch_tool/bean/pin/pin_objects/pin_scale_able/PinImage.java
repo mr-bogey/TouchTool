@@ -18,6 +18,7 @@ import java.lang.reflect.Type;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinBase;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinSubType;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinType;
+import top.bogey.touch_tool.utils.AppLog;
 import top.bogey.touch_tool.utils.EAnchor;
 import top.bogey.touch_tool.utils.GsonUtil;
 
@@ -65,7 +66,7 @@ public class PinImage extends PinScaleAble<String> {
                     image = Bitmap.createScaledBitmap(image, (int) (image.getWidth() * scale), (int) (image.getHeight() * scale), true);
                 }
             } catch (Exception | Error e) {
-                e.printStackTrace();
+                AppLog.e(e);
             }
         }
         return image;

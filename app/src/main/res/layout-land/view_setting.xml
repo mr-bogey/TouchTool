@@ -55,177 +55,194 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <com.google.android.material.card.MaterialCardView
-                    style="?attr/materialCardViewFilledStyle"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Large">
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        <Space
+                            android:layout_width="?attr/minTouchTargetSize"
+                            android:layout_height="wrap_content" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
+                            android:layout_margin="?attr/defaultPadding"
+                            android:layout_weight="1"
+                            android:text="@string/app_setting"
+                            android:textSize="12sp" />
 
-                            <Space
-                                android:layout_width="?attr/minTouchTargetSize"
-                                android:layout_height="wrap_content" />
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="?attr/defaultPadding"
-                                android:layout_weight="1"
-                                android:text="@string/app_setting"
-                                android:textSize="12sp" />
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:id="@+id/versionText"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="?attr/defaultPadding"
-                                android:textAppearance="?attr/textAppearanceLabelMedium"
-                                android:textColor="?attr/colorOnSurfaceVariant" />
-
-                        </LinearLayout>
-
-                        <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
-                            android:id="@+id/forgeServiceSwitch"
-                            android:layout_width="match_parent"
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/versionText"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:description="@string/app_setting_forge_service_desc"
-                            app:icon="@drawable/icon_notifications"
-                            app:title="@string/app_setting_forge_service" />
-
-                        <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
-                            android:id="@+id/hideBackSwitch"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:description="@string/app_setting_hide_back_desc"
-                            app:icon="@drawable/icon_visibility_off"
-                            app:title="@string/app_setting_hide_back" />
-
-                        <top.bogey.touch_tool.ui.setting.widget.SettingWidgetNormal
-                            android:id="@+id/ignoreBatterySetting"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:description="@string/app_setting_ignore_battery_desc"
-                            app:descriptionAccent="true"
-                            app:icon="@drawable/icon_battery_android_full"
-                            app:title="@string/app_setting_ignore_battery" />
-
-                        <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSelect
-                            android:id="@+id/autoBackupSelect"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:collapsible="true"
-                            app:cornerText="@string/app_setting_auto_backup_now"
-                            app:description="@string/app_setting_auto_backup_desc"
-                            app:icon="@drawable/icon_save"
-                            app:options="@array/auto_backup_days"
-                            app:title="@string/app_setting_auto_backup" />
-
-                        <top.bogey.touch_tool.ui.setting.widget.SettingWidgetNormal
-                            android:id="@+id/cleanCacheButton"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:description="@string/app_setting_clean_cache_desc"
-                            app:descriptionAccent="true"
-                            app:icon="@drawable/icon_delete"
-                            app:title="@string/app_setting_clean_cache" />
+                            android:layout_marginEnd="?attr/defaultPadding"
+                            android:textAppearance="?attr/textAppearanceLabelMedium"
+                            android:textColor="?attr/colorOnSurfaceVariant" />
 
                     </LinearLayout>
 
-                </com.google.android.material.card.MaterialCardView>
+                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
+                        android:id="@+id/forgeServiceSwitch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="?attr/defaultOffset"
+                        android:layout_marginTop="?attr/defaultOffset"
+                        app:rowCorner="top"
+                        app:description="@string/app_setting_forge_service_desc"
+                        app:icon="@drawable/icon_notifications"
+                        app:title="@string/app_setting_forge_service" />
+
+                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
+                        android:id="@+id/hideBackSwitch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="?attr/defaultOffset"
+                        android:layout_marginTop="?attr/defaultOffset"
+                        app:rowCorner="middle"
+                        app:description="@string/app_setting_hide_back_desc"
+                        app:icon="@drawable/icon_visibility_off"
+                        app:title="@string/app_setting_hide_back" />
+
+                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetNormal
+                        android:id="@+id/ignoreBatterySetting"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="?attr/defaultOffset"
+                        android:layout_marginTop="?attr/defaultOffset"
+                        app:rowCorner="middle"
+                        app:description="@string/app_setting_ignore_battery_desc"
+                        app:descriptionAccent="true"
+                        app:icon="@drawable/icon_battery_android_full"
+                        app:title="@string/app_setting_ignore_battery" />
+
+                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSelect
+                        android:id="@+id/autoBackupSelect"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="?attr/defaultOffset"
+                        android:layout_marginTop="?attr/defaultOffset"
+                        app:rowCorner="middle"
+                        app:collapsible="true"
+                        app:cornerText="@string/app_setting_auto_backup_now"
+                        app:description="@string/app_setting_auto_backup_desc"
+                        app:icon="@drawable/icon_save"
+                        app:options="@array/auto_backup_days"
+                        app:title="@string/app_setting_auto_backup" />
+
+                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetNormal
+                        android:id="@+id/cleanCacheButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="?attr/defaultOffset"
+                        android:layout_marginTop="?attr/defaultOffset"
+                        app:rowCorner="bottom"
+                        app:description="@string/app_setting_clean_cache_desc"
+                        app:descriptionAccent="true"
+                        app:icon="@drawable/icon_delete"
+                        app:title="@string/app_setting_clean_cache" />
+
+                </LinearLayout>
 
                 <Space
                     android:layout_width="match_parent"
                     android:layout_height="?attr/defaultPadding" />
 
-                <com.google.android.material.card.MaterialCardView
-                    style="?attr/materialCardViewFilledStyle"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Large">
+                    android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
 
-                        <LinearLayout
+                        <Space
+                            android:layout_width="?attr/minTouchTargetSize"
+                            android:layout_height="wrap_content" />
+
+                        <com.google.android.material.textview.MaterialTextView
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-
-                            <Space
-                                android:layout_width="?attr/minTouchTargetSize"
-                                android:layout_height="wrap_content" />
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="?attr/defaultPadding"
-                                android:text="@string/task_setting"
-                                android:textSize="12sp" />
-
-                        </LinearLayout>
-
-                        <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
-                            android:id="@+id/showTouchSwitch"
-                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:description="@string/task_setting_show_touch_desc"
-                            app:icon="@drawable/icon_gesture"
-                            app:title="@string/task_setting_show_touch" />
-
-                        <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
-                            android:id="@+id/showTargetAreaSwitch"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:description="@string/task_setting_show_target_area_desc"
-                            app:icon="@drawable/icon_area"
-                            app:title="@string/task_setting_show_target_area" />
-
-                        <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
-                            android:id="@+id/taskTipsSwitch"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:description="@string/task_setting_start_tips_desc"
-                            app:icon="@drawable/icon_notifications"
-                            app:title="@string/task_setting_start_tips" />
-
-                        <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
-                            android:id="@+id/detailLogSwitch"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:description="@string/task_setting_detail_log_desc"
-                            app:icon="@drawable/icon_draw"
-                            app:title="@string/task_setting_detail_log" />
-
-                        <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
-                            android:id="@+id/resetLogSwitch"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:description="@string/task_setting_log_reset_on_start_desc"
-                            app:icon="@drawable/icon_refresh"
-                            app:title="@string/task_setting_log_reset_on_start" />
-
-                        <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
-                            android:id="@+id/volumeButtonExitSwitch"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:description="@string/task_setting_volume_button_exit_desc"
-                            app:icon="@drawable/icon_keyboard"
-                            app:title="@string/task_setting_volume_button_exit" />
+                            android:layout_margin="?attr/defaultPadding"
+                            android:text="@string/task_setting"
+                            android:textSize="12sp" />
 
                     </LinearLayout>
 
-                </com.google.android.material.card.MaterialCardView>
+                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
+                        android:id="@+id/showTouchSwitch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="?attr/defaultOffset"
+                        android:layout_marginTop="?attr/defaultOffset"
+                        app:rowCorner="top"
+                        app:description="@string/task_setting_show_touch_desc"
+                        app:icon="@drawable/icon_gesture"
+                        app:title="@string/task_setting_show_touch" />
+
+                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
+                        android:id="@+id/showTargetAreaSwitch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="?attr/defaultOffset"
+                        android:layout_marginTop="?attr/defaultOffset"
+                        app:rowCorner="middle"
+                        app:description="@string/task_setting_show_target_area_desc"
+                        app:icon="@drawable/icon_area"
+                        app:title="@string/task_setting_show_target_area" />
+
+                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
+                        android:id="@+id/taskTipsSwitch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="?attr/defaultOffset"
+                        android:layout_marginTop="?attr/defaultOffset"
+                        app:rowCorner="middle"
+                        app:description="@string/task_setting_start_tips_desc"
+                        app:icon="@drawable/icon_notifications"
+                        app:title="@string/task_setting_start_tips" />
+
+                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
+                        android:id="@+id/detailLogSwitch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="?attr/defaultOffset"
+                        android:layout_marginTop="?attr/defaultOffset"
+                        app:rowCorner="middle"
+                        app:description="@string/task_setting_detail_log_desc"
+                        app:icon="@drawable/icon_draw"
+                        app:title="@string/task_setting_detail_log" />
+
+                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
+                        android:id="@+id/resetLogSwitch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="?attr/defaultOffset"
+                        android:layout_marginTop="?attr/defaultOffset"
+                        app:rowCorner="middle"
+                        app:description="@string/task_setting_log_reset_on_start_desc"
+                        app:icon="@drawable/icon_refresh"
+                        app:title="@string/task_setting_log_reset_on_start" />
+
+                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
+                        android:id="@+id/volumeButtonExitSwitch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="?attr/defaultOffset"
+                        android:layout_marginTop="?attr/defaultOffset"
+                        app:rowCorner="bottom"
+                        app:description="@string/task_setting_volume_button_exit_desc"
+                        app:icon="@drawable/icon_keyboard"
+                        app:title="@string/task_setting_volume_button_exit" />
+
+                </LinearLayout>
 
                 <Space
                     android:layout_width="match_parent"
@@ -243,216 +260,228 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <com.google.android.material.card.MaterialCardView
-                    style="?attr/materialCardViewFilledStyle"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Large">
+                    android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
 
-                        <LinearLayout
+                        <Space
+                            android:layout_width="?attr/minTouchTargetSize"
+                            android:layout_height="wrap_content" />
+
+                        <com.google.android.material.textview.MaterialTextView
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-
-                            <Space
-                                android:layout_width="?attr/minTouchTargetSize"
-                                android:layout_height="wrap_content" />
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="?attr/defaultPadding"
-                                android:text="@string/permission_setting"
-                                android:textSize="12sp" />
-
-                        </LinearLayout>
-
-                        <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSelect
-                            android:id="@+id/superUserSelect"
-                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:collapsible="true"
-                            app:description="@string/permission_setting_super_user_desc"
-                            app:icon="@drawable/icon_adb"
-                            app:options="@array/super_user_type"
-                            app:title="@string/permission_setting_super_user" />
-
-                        <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSelect
-                            android:id="@+id/notificationTypeSelect"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:collapsible="true"
-                            app:description="@string/permission_setting_notification_type_desc"
-                            app:icon="@drawable/icon_notifications_active"
-                            app:options="@array/notification_source_type"
-                            app:title="@string/permission_setting_notification_type" />
-
-                        <top.bogey.touch_tool.ui.setting.widget.SettingWidgetNormal
-                            android:id="@+id/notificationTypeCmd"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:description="@string/permission_setting_notification_type_sensitive_desc"
-                            app:icon="@drawable/icon_visibility"
-                            app:title="@string/permission_setting_notification_type_sensitive" />
-
-                        <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
-                            android:id="@+id/alarmSwitch"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:description="@string/permission_setting_alarm_desc"
-                            app:icon="@drawable/icon_timer"
-                            app:title="@string/permission_setting_alarm" />
-
-                        <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
-                            android:id="@+id/bluetoothSwitch"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:description="@string/permission_setting_bluetooth_desc"
-                            app:icon="@drawable/icon_bluetooth"
-                            app:title="@string/permission_setting_bluetooth" />
-
-                        <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
-                            android:id="@+id/locationSwitch"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:description="@string/permission_setting_location_desc"
-                            app:icon="@drawable/icon_my_location"
-                            app:title="@string/permission_setting_location" />
+                            android:layout_margin="?attr/defaultPadding"
+                            android:text="@string/permission_setting"
+                            android:textSize="12sp" />
 
                     </LinearLayout>
 
-                </com.google.android.material.card.MaterialCardView>
+                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSelect
+                        android:id="@+id/superUserSelect"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="?attr/defaultOffset"
+                        android:layout_marginTop="?attr/defaultOffset"
+                        app:rowCorner="top"
+                        app:collapsible="true"
+                        app:description="@string/permission_setting_super_user_desc"
+                        app:icon="@drawable/icon_adb"
+                        app:options="@array/super_user_type"
+                        app:title="@string/permission_setting_super_user" />
+
+                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSelect
+                        android:id="@+id/notificationTypeSelect"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="?attr/defaultOffset"
+                        android:layout_marginTop="?attr/defaultOffset"
+                        app:rowCorner="middle"
+                        app:collapsible="true"
+                        app:description="@string/permission_setting_notification_type_desc"
+                        app:icon="@drawable/icon_notifications_active"
+                        app:options="@array/notification_source_type"
+                        app:title="@string/permission_setting_notification_type" />
+
+                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetNormal
+                        android:id="@+id/notificationTypeCmd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="?attr/defaultOffset"
+                        android:layout_marginTop="?attr/defaultOffset"
+                        app:rowCorner="middle"
+                        app:description="@string/permission_setting_notification_type_sensitive_desc"
+                        app:icon="@drawable/icon_visibility"
+                        app:title="@string/permission_setting_notification_type_sensitive" />
+
+                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
+                        android:id="@+id/alarmSwitch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="?attr/defaultOffset"
+                        android:layout_marginTop="?attr/defaultOffset"
+                        app:rowCorner="middle"
+                        app:description="@string/permission_setting_alarm_desc"
+                        app:icon="@drawable/icon_timer"
+                        app:title="@string/permission_setting_alarm" />
+
+                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
+                        android:id="@+id/bluetoothSwitch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="?attr/defaultOffset"
+                        android:layout_marginTop="?attr/defaultOffset"
+                        app:rowCorner="middle"
+                        app:description="@string/permission_setting_bluetooth_desc"
+                        app:icon="@drawable/icon_bluetooth"
+                        app:title="@string/permission_setting_bluetooth" />
+
+                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
+                        android:id="@+id/locationSwitch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="?attr/defaultOffset"
+                        android:layout_marginTop="?attr/defaultOffset"
+                        app:rowCorner="bottom"
+                        app:description="@string/permission_setting_location_desc"
+                        app:icon="@drawable/icon_my_location"
+                        app:title="@string/permission_setting_location" />
+
+                </LinearLayout>
 
                 <Space
                     android:layout_width="match_parent"
                     android:layout_height="?attr/defaultPadding" />
 
-                <com.google.android.material.card.MaterialCardView
-                    style="?attr/materialCardViewFilledStyle"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Large">
+                    android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
 
-                        <LinearLayout
+                        <Space
+                            android:layout_width="?attr/minTouchTargetSize"
+                            android:layout_height="wrap_content" />
+
+                        <com.google.android.material.textview.MaterialTextView
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-
-                            <Space
-                                android:layout_width="?attr/minTouchTargetSize"
-                                android:layout_height="wrap_content" />
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="?attr/defaultPadding"
-                                android:text="@string/blueprint_setting"
-                                android:textSize="12sp" />
-
-                        </LinearLayout>
-
-                        <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSelect
-                            android:id="@+id/cardTypeSelect"
-                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:collapsible="true"
-                            app:description="@string/blueprint_setting_card_default_desc"
-                            app:icon="@drawable/icon_visibility"
-                            app:options="@array/card_default_type"
-                            app:title="@string/blueprint_setting_card_default" />
+                            android:layout_margin="?attr/defaultPadding"
+                            android:text="@string/blueprint_setting"
+                            android:textSize="12sp" />
 
-                        <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSlider
-                            android:id="@+id/arrangeCardOffset"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:collapsible="true"
-                            app:description="@string/blueprint_setting_arrange_card_offset_desc"
-                            app:icon="@drawable/icon_straighten"
-                            app:max="5"
-                            app:min="1"
-                            app:title="@string/blueprint_setting_arrange_card_offset"
-                            app:value="1" />
                     </LinearLayout>
 
-                </com.google.android.material.card.MaterialCardView>
+                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSelect
+                        android:id="@+id/cardTypeSelect"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="?attr/defaultOffset"
+                        android:layout_marginTop="?attr/defaultOffset"
+                        app:rowCorner="top"
+                        app:collapsible="true"
+                        app:description="@string/blueprint_setting_card_default_desc"
+                        app:icon="@drawable/icon_visibility"
+                        app:options="@array/card_default_type"
+                        app:title="@string/blueprint_setting_card_default" />
+
+                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSlider
+                        android:id="@+id/arrangeCardOffset"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="?attr/defaultOffset"
+                        android:layout_marginTop="?attr/defaultOffset"
+                        app:rowCorner="bottom"
+                        app:collapsible="true"
+                        app:description="@string/blueprint_setting_arrange_card_offset_desc"
+                        app:icon="@drawable/icon_straighten"
+                        app:max="5"
+                        app:min="1"
+                        app:title="@string/blueprint_setting_arrange_card_offset"
+                        app:value="1" />
+                </LinearLayout>
 
                 <Space
                     android:layout_width="match_parent"
                     android:layout_height="?attr/defaultPadding" />
 
-                <com.google.android.material.card.MaterialCardView
-                    style="?attr/materialCardViewFilledStyle"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Large">
+                    android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
 
-                        <LinearLayout
+                        <Space
+                            android:layout_width="?attr/minTouchTargetSize"
+                            android:layout_height="wrap_content" />
+
+                        <com.google.android.material.textview.MaterialTextView
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-
-                            <Space
-                                android:layout_width="?attr/minTouchTargetSize"
-                                android:layout_height="wrap_content" />
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="?attr/defaultPadding"
-                                android:text="@string/preference_setting"
-                                android:textSize="12sp" />
-
-                        </LinearLayout>
-
-                        <top.bogey.touch_tool.ui.setting.widget.SettingWidgetNormal
-                            android:id="@+id/manualPlaySetting"
-                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:description="@string/preference_setting_manual_play_desc_1"
-                            app:icon="@drawable/icon_touch_app"
-                            app:title="@string/preference_setting_manual_play" />
-
-                        <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
-                            android:id="@+id/supportFreeFormSwitch"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:description="@string/preference_setting_support_free_form_desc"
-                            app:icon="@drawable/icon_mobile"
-                            app:options="@array/theme_type"
-                            app:title="@string/preference_setting_support_free_form" />
-
-                        <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSelect
-                            android:id="@+id/themeSelect"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:collapsible="true"
-                            app:icon="@drawable/icon_dark_mode"
-                            app:options="@array/theme_type"
-                            app:title="@string/preference_setting_theme" />
-
-                        <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
-                            android:id="@+id/dynamicColorSwitch"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:description="@string/preference_setting_color_desc"
-                            app:icon="@drawable/icon_palette"
-                            app:title="@string/preference_setting_color" />
+                            android:layout_margin="?attr/defaultPadding"
+                            android:text="@string/preference_setting"
+                            android:textSize="12sp" />
 
                     </LinearLayout>
 
-                </com.google.android.material.card.MaterialCardView>
+                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetNormal
+                        android:id="@+id/manualPlaySetting"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="?attr/defaultOffset"
+                        android:layout_marginTop="?attr/defaultOffset"
+                        app:rowCorner="top"
+                        app:description="@string/preference_setting_manual_play_desc_1"
+                        app:icon="@drawable/icon_touch_app"
+                        app:title="@string/preference_setting_manual_play" />
+
+                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
+                        android:id="@+id/supportFreeFormSwitch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="?attr/defaultOffset"
+                        android:layout_marginTop="?attr/defaultOffset"
+                        app:rowCorner="middle"
+                        app:description="@string/preference_setting_support_free_form_desc"
+                        app:icon="@drawable/icon_mobile"
+                        app:options="@array/theme_type"
+                        app:title="@string/preference_setting_support_free_form" />
+
+                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSelect
+                        android:id="@+id/themeSelect"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="?attr/defaultOffset"
+                        android:layout_marginTop="?attr/defaultOffset"
+                        app:rowCorner="middle"
+                        app:collapsible="true"
+                        app:icon="@drawable/icon_dark_mode"
+                        app:options="@array/theme_type"
+                        app:title="@string/preference_setting_theme" />
+
+                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
+                        android:id="@+id/dynamicColorSwitch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="?attr/defaultOffset"
+                        android:layout_marginTop="?attr/defaultOffset"
+                        app:rowCorner="bottom"
+                        app:description="@string/preference_setting_color_desc"
+                        app:icon="@drawable/icon_palette"
+                        app:title="@string/preference_setting_color" />
+
+                </LinearLayout>
 
             </LinearLayout>
 

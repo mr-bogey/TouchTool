@@ -13,6 +13,7 @@ import top.bogey.touch_tool.bean.pin.pin_objects.pin_string.PinSingleSelect;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_string.PinString;
 import top.bogey.touch_tool.bean.pin.special_pin.NotLinkAblePin;
 import top.bogey.touch_tool.service.TaskRunnable;
+import top.bogey.touch_tool.utils.AppLog;
 
 public class StringEncryptAction extends CalculateAction {
     private final transient Pin typePin = new NotLinkAblePin(new PinSingleSelect(R.array.string_encrypt_type), R.string.string_encrypt_action_type);
@@ -41,7 +42,7 @@ public class StringEncryptAction extends CalculateAction {
             String result = bytesToHex(digest.digest(value.getBytes()));
             resultPin.getValue(PinString.class).setValue(result);
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            AppLog.e(e);
         }
     }
 

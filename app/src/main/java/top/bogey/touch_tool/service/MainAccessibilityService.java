@@ -28,10 +28,10 @@ import android.os.Vibrator;
 import android.os.VibratorManager;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+import android.view.accessibility.AccessibilityWindowInfo;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -79,6 +79,7 @@ import top.bogey.touch_tool.ui.MainActivity;
 import top.bogey.touch_tool.ui.PermissionActivity;
 import top.bogey.touch_tool.ui.custom.float_view.KeepAliveFloatView;
 import top.bogey.touch_tool.ui.play.PlayFloatView;
+import top.bogey.touch_tool.utils.AppLog;
 import top.bogey.touch_tool.utils.AppUtil;
 import top.bogey.touch_tool.utils.ThreadUtil;
 import top.bogey.touch_tool.utils.callback.BooleanResultCallback;
@@ -104,16 +105,17 @@ public class MainAccessibilityService extends AccessibilityService {
     public void onAccessibilityEvent(AccessibilityEvent event) {
         if (event == null) return;
 
-        if (event.getClassName() == null) return;
-
-        String packageName = event.getPackageName().toString();
-        String className = event.getClassName().toString();
-        if (packageName.isEmpty() || className.isEmpty()) return;
-        Log.d("TAG", "onAccessibilityEvent: " + event);
-        Log.d("TAG", "onAccessibilityEvent: " + packageName + "/" + className);
+        AppLog.d("事件", "onAccessibilityEvent: " + event);
+        // 窗口变化事件不带包名与类名，这里按需取值
+        String packageName = event.getPackageName() == null ? null : event.getPackageName().toString();
+        String className = event.getClassName() == null ? null : event.getClassName().toString();
 
         int eventType = event.getEventType();
         if (eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
+            if (packageName == null || className == null) return;
+            if (packageName.isEmpty() || className.isEmpty()) return;
+            // 采集窗口事件，供设置页的日志查看，不去重
+            AppLog.add(AppLog.CATEGORY_ACTIVITY, packageName, className);
             // 桌面应用需要检查实际界面与事件是否匹配
             if (taskInfoSummary.isLauncherApp(packageName)) {
                 AccessibilityNodeInfo root = getRootInActiveWindow();
@@ -125,7 +127,22 @@ public class MainAccessibilityService extends AccessibilityService {
                 }
             }
             taskInfoSummary.enterActivity(packageName, className);
+        } else if (eventType == AccessibilityEvent.TYPE_WINDOWS_CHANGED) {
+            // 部分桌面切回桌面不发窗口状态变化事件，按激活窗口兜底
+            String windowPackage = null;
+            for (AccessibilityWindowInfo window : getWindows()) {
+                if (window.getType() != AccessibilityWindowInfo.TYPE_APPLICATION) continue;
+                if (!window.isActive()) continue;
+                AccessibilityNodeInfo root = window.getRoot();
+                if (root == null || root.getPackageName() == null) continue;
+                windowPackage = root.getPackageName().toString();
+                break;
+            }
+            if (windowPackage != null && taskInfoSummary.isLauncherApp(windowPackage)) {
+                taskInfoSummary.enterLauncher(windowPackage);
+            }
         } else if (eventType == AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED) {
+            if (packageName == null || className == null) return;
             Map<String, String> content = new HashMap<>();
             List<CharSequence> textList = event.getText();
 
@@ -319,7 +336,7 @@ public class MainAccessibilityService extends AccessibilityService {
             // 线程池容量已满，任务没有真正提交，也就永远不会触发 onFinish，
             // 必须立刻从运行列表里移除，否则会被当成运行中的任务
             tasks.remove(runnable);
-            Log.e("TAG", "runTask: 线程池已满，任务未能提交", e);
+            AppLog.e("线程", "runTask: 线程池已满，任务未能提交", e);
             return null;
         }
         runnable.setFuture(future);
@@ -548,7 +565,9 @@ public class MainAccessibilityService extends AccessibilityService {
             manager.setAlarmClock(clockInfo, pendingIntent);
         }
         if (timeStartAction.isShowTimeLog()) {
-            LogSaver.getInstance().addLog(task.getId(), new LogInfo(new NormalLog(getString(R.string.time_start_action_set_tips, AppUtil.formatDateTime(this, nextStartTime, false, true)))), true);
+            String timeTips = getString(R.string.time_start_action_set_tips, AppUtil.formatDateTime(this, nextStartTime, false, true));
+            LogSaver.getInstance().addLog(task.getId(), new LogInfo(new NormalLog(timeTips)), true);
+            AppLog.add(AppLog.CATEGORY_ALARM, task.getTitle(), timeTips);
         }
     }
 
@@ -803,7 +822,7 @@ public class MainAccessibilityService extends AccessibilityService {
                 takeScreenshot(0, ThreadUtil.getExecutorService(), callback);
             } catch (RejectedExecutionException e) {
                 // 线程池已满，截图请求没有提交，直接退回缓存的截图
-                Log.e("TAG", "getScreenShotByAccessibility: 线程池已满，截图未能提交", e);
+                AppLog.e("截图", "getScreenShotByAccessibility: 线程池已满，截图未能提交", e);
                 return screenShot.get();
             }
             return future.join();
@@ -937,7 +956,7 @@ public class MainAccessibilityService extends AccessibilityService {
             });
             mediaPlayer.prepareAsync();
         } catch (Exception e) {
-            e.printStackTrace();
+            AppLog.e(e);
         }
     }
 

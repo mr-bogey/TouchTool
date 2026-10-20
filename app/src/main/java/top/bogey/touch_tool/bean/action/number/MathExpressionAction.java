@@ -19,6 +19,7 @@ import top.bogey.touch_tool.bean.pin.pin_objects.pin_string.PinAutoPinString;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_string.PinString;
 import top.bogey.touch_tool.bean.pin.special_pin.NotLinkAblePin;
 import top.bogey.touch_tool.service.TaskRunnable;
+import top.bogey.touch_tool.utils.AppLog;
 
 public class MathExpressionAction extends CalculateAction implements DynamicPinsAction {
     private final transient Pin expressionPin = new NotLinkAblePin(new PinAutoPinString(), R.string.math_expression_action_express);
@@ -53,7 +54,7 @@ public class MathExpressionAction extends CalculateAction implements DynamicPins
             double result = exp.evaluate();
             resultPin.getValue(PinDouble.class).setValue(result);
         } catch (Exception e) {
-            e.printStackTrace();
+            AppLog.e(e);
         }
     }
 

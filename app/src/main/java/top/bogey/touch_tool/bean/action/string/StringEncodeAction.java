@@ -15,6 +15,7 @@ import top.bogey.touch_tool.bean.pin.pin_objects.pin_string.PinSingleSelect;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_string.PinString;
 import top.bogey.touch_tool.bean.pin.special_pin.NotLinkAblePin;
 import top.bogey.touch_tool.service.TaskRunnable;
+import top.bogey.touch_tool.utils.AppLog;
 
 public class StringEncodeAction extends CalculateAction {
     private final transient Pin typePin = new NotLinkAblePin(new PinSingleSelect(R.array.string_encode_type), R.string.string_encode_action_type);
@@ -42,7 +43,7 @@ public class StringEncodeAction extends CalculateAction {
                 try {
                     yield URLEncoder.encode(value, StandardCharsets.UTF_8.name());
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    AppLog.e(e);
                     yield value;
                 }
             }

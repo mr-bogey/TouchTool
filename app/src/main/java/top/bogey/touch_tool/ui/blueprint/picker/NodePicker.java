@@ -39,6 +39,7 @@ import top.bogey.touch_tool.service.TaskInfoSummary;
 import top.bogey.touch_tool.ui.MainActivity;
 import top.bogey.touch_tool.ui.custom.float_view.KeepAliveFloatView;
 import top.bogey.touch_tool.ui.custom.float_view.NodeInfoFloatView;
+import top.bogey.touch_tool.utils.AppLog;
 import top.bogey.touch_tool.utils.AppUtil;
 import top.bogey.touch_tool.utils.DisplayUtil;
 import top.bogey.touch_tool.utils.GsonUtil;
@@ -191,7 +192,7 @@ public class NodePicker extends FullScreenPicker<NodeInfo> implements NodePicker
             try {
                 manager.moveTaskToFront(activity.getTaskId(), 0);
             } catch (Exception e) {
-                e.printStackTrace();
+                AppLog.e(e);
             }
 
             FloatWindow.hide(tag);
@@ -218,7 +219,7 @@ public class NodePicker extends FullScreenPicker<NodeInfo> implements NodePicker
             try {
                 manager.moveTaskToFront(activity.getTaskId(), 0);
             } catch (Exception e) {
-                e.printStackTrace();
+                AppLog.e(e);
             }
 
             FloatWindow.hide(tag);

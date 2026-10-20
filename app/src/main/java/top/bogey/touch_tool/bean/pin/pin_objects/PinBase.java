@@ -1,7 +1,6 @@
 package top.bogey.touch_tool.bean.pin.pin_objects;
 
 import android.graphics.Bitmap;
-import android.util.Log;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -20,6 +19,7 @@ import top.bogey.touch_tool.bean.pin.pin_objects.pin_list.PinList;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_number.PinDouble;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_scale_able.PinImage;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_string.PinString;
+import top.bogey.touch_tool.utils.AppLog;
 import top.bogey.touch_tool.utils.GsonUtil;
 
 public abstract class PinBase implements Copyable {
@@ -107,8 +107,8 @@ public abstract class PinBase implements Copyable {
                 Constructor<? extends PinBase> constructor = pinInfo.getClazz().getConstructor(JsonObject.class);
                 return constructor.newInstance(jsonObject);
             } catch (Exception e) {
-                Log.d("TAG", "deserialize pin: " + pinInfo);
-                Log.d("TAG", "deserialize pin json: " + json);
+                AppLog.d("针脚", "deserialize pin: " + pinInfo);
+                AppLog.d("针脚", "deserialize pin json: " + json);
                 throw new JsonParseException(e);
             }
         }

@@ -7,6 +7,7 @@ import java.lang.reflect.Constructor;
 import top.bogey.touch_tool.bean.save.setting.SettingSaver;
 import top.bogey.touch_tool.service.super_user.root.RootSuperUser;
 import top.bogey.touch_tool.service.super_user.shizuku.ShizukuSuperUser;
+import top.bogey.touch_tool.utils.AppLog;
 import top.bogey.touch_tool.utils.callback.BooleanResultCallback;
 
 public class SuperUser implements ISuperUser {
@@ -26,7 +27,7 @@ public class SuperUser implements ISuperUser {
                     Constructor<? extends ISuperUser> constructor = clazz.getDeclaredConstructor();
                     instance = constructor.newInstance();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    AppLog.e(e);
                 }
             }
         }

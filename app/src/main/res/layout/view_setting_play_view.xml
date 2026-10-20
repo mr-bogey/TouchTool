@@ -33,160 +33,171 @@
             android:orientation="vertical"
             android:padding="?attr/defaultPadding">
 
-            <com.google.android.material.card.MaterialCardView
-                style="?attr/materialCardViewFilledStyle"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Large">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <Space
+                        android:layout_width="?attr/minTouchTargetSize"
+                        android:layout_height="wrap_content" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <Space
-                            android:layout_width="?attr/minTouchTargetSize"
-                            android:layout_height="wrap_content" />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="?attr/defaultPadding"
-                            android:layout_weight="1"
-                            android:text="@string/manual_play_group_action"
-                            android:textSize="12sp" />
-
-                    </LinearLayout>
-                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSelect
-                        android:id="@+id/manualPlaySelect"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:collapsible="true"
-                        app:description="@string/preference_setting_manual_play_desc_2"
-                        app:icon="@drawable/icon_touch_app"
-                        app:options="@array/manual_play_type"
-                        app:title="@string/preference_setting_manual_play" />
-
-                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSelect
-                        android:id="@+id/manualPlayPauseSelect"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:collapsible="true"
-                        app:description="@string/preference_setting_manual_play_pause_desc"
-                        app:icon="@drawable/icon_pause"
-                        app:options="@array/manual_play_pause_type"
-                        app:title="@string/preference_setting_manual_play_pause" />
-
-                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
-                        android:id="@+id/manualPlayGotoTaskSwitch"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:description="@string/preference_setting_manual_play_goto_task_desc"
-                        app:icon="@drawable/icon_draw"
-                        app:title="@string/preference_setting_manual_play_goto_task" />
-
-                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetNormal
-                        android:id="@+id/manualPlayReset"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:description="@string/preference_setting_manual_play_reset_desc"
-                        app:icon="@drawable/icon_refresh"
-                        app:title="@string/preference_setting_manual_play_reset" />
+                        android:layout_margin="?attr/defaultPadding"
+                        android:layout_weight="1"
+                        android:text="@string/manual_play_group_action"
+                        android:textSize="12sp" />
 
                 </LinearLayout>
+                <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSelect
+                    android:id="@+id/manualPlaySelect"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="?attr/defaultOffset"
+                    android:layout_marginTop="?attr/defaultOffset"
+                    app:rowCorner="top"
+                    app:collapsible="true"
+                    app:description="@string/preference_setting_manual_play_desc_2"
+                    app:icon="@drawable/icon_touch_app"
+                    app:options="@array/manual_play_type"
+                    app:title="@string/preference_setting_manual_play" />
 
-            </com.google.android.material.card.MaterialCardView>
+                <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSelect
+                    android:id="@+id/manualPlayPauseSelect"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="?attr/defaultOffset"
+                    android:layout_marginTop="?attr/defaultOffset"
+                    app:rowCorner="middle"
+                    app:collapsible="true"
+                    app:description="@string/preference_setting_manual_play_pause_desc"
+                    app:icon="@drawable/icon_pause"
+                    app:options="@array/manual_play_pause_type"
+                    app:title="@string/preference_setting_manual_play_pause" />
+
+                <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
+                    android:id="@+id/manualPlayGotoTaskSwitch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="?attr/defaultOffset"
+                    android:layout_marginTop="?attr/defaultOffset"
+                    app:rowCorner="middle"
+                    app:description="@string/preference_setting_manual_play_goto_task_desc"
+                    app:icon="@drawable/icon_draw"
+                    app:title="@string/preference_setting_manual_play_goto_task" />
+
+                <top.bogey.touch_tool.ui.setting.widget.SettingWidgetNormal
+                    android:id="@+id/manualPlayReset"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="?attr/defaultOffset"
+                    android:layout_marginTop="?attr/defaultOffset"
+                    app:rowCorner="bottom"
+                    app:description="@string/preference_setting_manual_play_reset_desc"
+                    app:icon="@drawable/icon_refresh"
+                    app:title="@string/preference_setting_manual_play_reset" />
+
+            </LinearLayout>
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="?attr/defaultPadding" />
 
-            <com.google.android.material.card.MaterialCardView
-                style="?attr/materialCardViewFilledStyle"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Large">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <Space
+                        android:layout_width="?attr/minTouchTargetSize"
+                        android:layout_height="wrap_content" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <Space
-                            android:layout_width="?attr/minTouchTargetSize"
-                            android:layout_height="wrap_content" />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="?attr/defaultPadding"
-                            android:layout_weight="1"
-                            android:text="@string/manual_play_group_display"
-                            android:textSize="12sp" />
-
-                    </LinearLayout>
-                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSelect
-                        android:id="@+id/hideManualPlaySelect"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:collapsible="true"
-                        app:description="@string/preference_setting_manual_play_hide_desc"
-                        app:icon="@drawable/icon_visibility_off"
-                        app:options="@array/manual_play_hide_type"
-                        app:title="@string/preference_setting_manual_play_hide" />
-
-                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
-                        android:id="@+id/hideManualPlaySelectWhenScreenShot"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:description="@string/preference_setting_manual_play_hide_when_screen_shot_desc"
-                        app:icon="@drawable/icon_visibility_off"
-                        app:title="@string/preference_setting_manual_play_hide_when_screen_shot" />
-
-                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
-                        android:id="@+id/manualPlayingHideSwitch"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:description="@string/preference_setting_manual_playing_hide_desc"
-                        app:icon="@drawable/icon_visibility_off"
-                        app:title="@string/preference_setting_manual_playing_hide" />
-
-                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
-                        android:id="@+id/notPlayHideSwitch"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:description="@string/preference_setting_manual_not_play_hide_desc"
-                        app:icon="@drawable/icon_symptoms"
-                        app:title="@string/preference_setting_manual_not_play_hide" />
-
-                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSlider
-                        android:id="@+id/notPlayHideAlpha"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:collapsible="true"
-                        app:description="@string/preference_setting_manual_not_play_hide_alpha_desc"
-                        app:icon="@drawable/icon_symptoms"
-                        app:max="80"
-                        app:min="20"
-                        app:step="10"
-                        app:title="@string/preference_setting_manual_not_play_hide_alpha"
-                        app:value="50" />
+                        android:layout_margin="?attr/defaultPadding"
+                        android:layout_weight="1"
+                        android:text="@string/manual_play_group_display"
+                        android:textSize="12sp" />
 
                 </LinearLayout>
+                <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSelect
+                    android:id="@+id/hideManualPlaySelect"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="?attr/defaultOffset"
+                    android:layout_marginTop="?attr/defaultOffset"
+                    app:rowCorner="top"
+                    app:collapsible="true"
+                    app:description="@string/preference_setting_manual_play_hide_desc"
+                    app:icon="@drawable/icon_visibility_off"
+                    app:options="@array/manual_play_hide_type"
+                    app:title="@string/preference_setting_manual_play_hide" />
 
-            </com.google.android.material.card.MaterialCardView>
+                <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
+                    android:id="@+id/hideManualPlaySelectWhenScreenShot"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="?attr/defaultOffset"
+                    android:layout_marginTop="?attr/defaultOffset"
+                    app:rowCorner="middle"
+                    app:description="@string/preference_setting_manual_play_hide_when_screen_shot_desc"
+                    app:icon="@drawable/icon_visibility_off"
+                    app:title="@string/preference_setting_manual_play_hide_when_screen_shot" />
+
+                <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
+                    android:id="@+id/manualPlayingHideSwitch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="?attr/defaultOffset"
+                    android:layout_marginTop="?attr/defaultOffset"
+                    app:rowCorner="middle"
+                    app:description="@string/preference_setting_manual_playing_hide_desc"
+                    app:icon="@drawable/icon_visibility_off"
+                    app:title="@string/preference_setting_manual_playing_hide" />
+
+                <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
+                    android:id="@+id/notPlayHideSwitch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="?attr/defaultOffset"
+                    android:layout_marginTop="?attr/defaultOffset"
+                    app:rowCorner="middle"
+                    app:description="@string/preference_setting_manual_not_play_hide_desc"
+                    app:icon="@drawable/icon_symptoms"
+                    app:title="@string/preference_setting_manual_not_play_hide" />
+
+                <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSlider
+                    android:id="@+id/notPlayHideAlpha"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="?attr/defaultOffset"
+                    android:layout_marginTop="?attr/defaultOffset"
+                    app:rowCorner="bottom"
+                    app:collapsible="true"
+                    app:description="@string/preference_setting_manual_not_play_hide_alpha_desc"
+                    app:icon="@drawable/icon_symptoms"
+                    app:max="80"
+                    app:min="20"
+                    app:step="10"
+                    app:title="@string/preference_setting_manual_not_play_hide_alpha"
+                    app:value="50" />
+
+            </LinearLayout>
 
             <Space
                 android:layout_width="match_parent"
@@ -366,99 +377,106 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/defaultPadding" />
 
-            <com.google.android.material.card.MaterialCardView
-                style="?attr/materialCardViewFilledStyle"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Large">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <Space
+                        android:layout_width="?attr/minTouchTargetSize"
+                        android:layout_height="wrap_content" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <Space
-                            android:layout_width="?attr/minTouchTargetSize"
-                            android:layout_height="wrap_content" />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="?attr/defaultPadding"
-                            android:layout_weight="1"
-                            android:text="@string/manual_play_group_size"
-                            android:textSize="12sp" />
-
-                    </LinearLayout>
-                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSlider
-                        android:id="@+id/manualPlayPadding"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:collapsible="true"
-                        app:description="@string/preference_setting_manual_play_padding_desc"
-                        app:icon="@drawable/icon_mobile"
-                        app:max="10"
-                        app:title="@string/preference_setting_manual_play_padding"
-                        app:value="0" />
-
-                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSlider
-                        android:id="@+id/manualPlaySize"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:collapsible="true"
-                        app:description="@string/preference_setting_manual_play_size_desc"
-                        app:icon="@drawable/icon_zoom_out_map"
-                        app:max="3"
-                        app:min="1"
-                        app:title="@string/preference_setting_manual_play_size"
-                        app:value="1" />
-
-                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSlider
-                        android:id="@+id/manualPlayHeight"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:collapsible="true"
-                        app:description="@string/preference_setting_manual_play_height_desc"
-                        app:icon="@drawable/icon_straighten"
-                        app:max="3"
-                        app:min="1"
-                        app:title="@string/preference_setting_manual_play_height"
-                        app:value="1" />
-
-
-                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSlider
-                        android:id="@+id/manualPlayCloseSize"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:collapsible="true"
-                        app:description="@string/preference_setting_manual_play_close_size_desc"
-                        app:icon="@drawable/icon_zoom_in_map"
-                        app:max="3"
-                        app:min="1"
-                        app:title="@string/preference_setting_manual_play_close_size"
-                        app:value="1" />
-
-                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSlider
-                        android:id="@+id/manualPlaySingleSize"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:collapsible="true"
-                        app:description="@string/preference_setting_manual_play_single_size_desc"
-                        app:icon="@drawable/icon_area"
-                        app:max="3"
-                        app:min="1"
-                        app:title="@string/preference_setting_manual_play_single_size"
-                        app:value="1" />
+                        android:layout_margin="?attr/defaultPadding"
+                        android:layout_weight="1"
+                        android:text="@string/manual_play_group_size"
+                        android:textSize="12sp" />
 
                 </LinearLayout>
+                <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSlider
+                    android:id="@+id/manualPlayPadding"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="?attr/defaultOffset"
+                    android:layout_marginTop="?attr/defaultOffset"
+                    app:rowCorner="top"
+                    app:collapsible="true"
+                    app:description="@string/preference_setting_manual_play_padding_desc"
+                    app:icon="@drawable/icon_mobile"
+                    app:max="10"
+                    app:title="@string/preference_setting_manual_play_padding"
+                    app:value="0" />
 
-            </com.google.android.material.card.MaterialCardView>
+                <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSlider
+                    android:id="@+id/manualPlaySize"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="?attr/defaultOffset"
+                    android:layout_marginTop="?attr/defaultOffset"
+                    app:rowCorner="middle"
+                    app:collapsible="true"
+                    app:description="@string/preference_setting_manual_play_size_desc"
+                    app:icon="@drawable/icon_zoom_out_map"
+                    app:max="3"
+                    app:min="1"
+                    app:title="@string/preference_setting_manual_play_size"
+                    app:value="1" />
+
+                <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSlider
+                    android:id="@+id/manualPlayHeight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="?attr/defaultOffset"
+                    android:layout_marginTop="?attr/defaultOffset"
+                    app:rowCorner="middle"
+                    app:collapsible="true"
+                    app:description="@string/preference_setting_manual_play_height_desc"
+                    app:icon="@drawable/icon_straighten"
+                    app:max="3"
+                    app:min="1"
+                    app:title="@string/preference_setting_manual_play_height"
+                    app:value="1" />
+
+
+                <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSlider
+                    android:id="@+id/manualPlayCloseSize"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="?attr/defaultOffset"
+                    android:layout_marginTop="?attr/defaultOffset"
+                    app:rowCorner="middle"
+                    app:collapsible="true"
+                    app:description="@string/preference_setting_manual_play_close_size_desc"
+                    app:icon="@drawable/icon_zoom_in_map"
+                    app:max="3"
+                    app:min="1"
+                    app:title="@string/preference_setting_manual_play_close_size"
+                    app:value="1" />
+
+                <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSlider
+                    android:id="@+id/manualPlaySingleSize"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="?attr/defaultOffset"
+                    android:layout_marginTop="?attr/defaultOffset"
+                    app:rowCorner="bottom"
+                    app:collapsible="true"
+                    app:description="@string/preference_setting_manual_play_single_size_desc"
+                    app:icon="@drawable/icon_area"
+                    app:max="3"
+                    app:min="1"
+                    app:title="@string/preference_setting_manual_play_single_size"
+                    app:value="1" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

@@ -28,6 +28,7 @@ import top.bogey.touch_tool.bean.task.Task;
 import top.bogey.touch_tool.service.ITaskListener;
 import top.bogey.touch_tool.service.MainAccessibilityService;
 import top.bogey.touch_tool.service.TaskRunnable;
+import top.bogey.touch_tool.utils.AppLog;
 import top.bogey.touch_tool.utils.tree.ITreeNodeData;
 
 public class ParallelExecuteAction extends ExecuteAction implements DynamicPinsAction {
@@ -117,7 +118,7 @@ public class ParallelExecuteAction extends ExecuteAction implements DynamicPinsA
                 latch.await(timeout.intValue(), TimeUnit.MILLISECONDS);
             }
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            AppLog.e(e);
             resultPin.getValue(PinBoolean.class).setValue(false);
         }
         runnable.removeListener(listener);

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.util.HashMap;
@@ -15,6 +14,7 @@ import java.util.Map;
 import top.bogey.touch_tool.R;
 import top.bogey.touch_tool.bean.save.setting.SettingSaver;
 import top.bogey.touch_tool.service.TaskInfoSummary;
+import top.bogey.touch_tool.utils.AppLog;
 
 public class NotificationService extends NotificationListenerService {
     private static boolean isEnabled = false;
@@ -36,7 +36,7 @@ public class NotificationService extends NotificationListenerService {
     @Override
     public void onListenerConnected() {
         super.onListenerConnected();
-        Log.d("TAG", "NotificationService onListenerConnected");
+        AppLog.d("通知", "NotificationService onListenerConnected");
         isEnabled = true;
     }
 

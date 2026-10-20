@@ -3,6 +3,7 @@ package top.bogey.touch_tool.bean.pin.pin_objects.pin_number;
 import com.google.gson.JsonObject;
 
 import top.bogey.touch_tool.bean.pin.pin_objects.PinSubType;
+import top.bogey.touch_tool.utils.AppLog;
 import top.bogey.touch_tool.utils.GsonUtil;
 
 public class PinLong extends PinNumber<Long> {
@@ -41,7 +42,7 @@ public class PinLong extends PinNumber<Long> {
             this.value = Long.parseLong(value);
             return true;
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            AppLog.e(e);
             return false;
         }
     }

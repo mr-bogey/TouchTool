@@ -11,6 +11,7 @@ import top.bogey.touch_tool.bean.pin.pin_objects.PinBase;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinObject;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinSubType;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinType;
+import top.bogey.touch_tool.utils.AppLog;
 import top.bogey.touch_tool.utils.DisplayUtil;
 import top.bogey.touch_tool.utils.EAnchor;
 import top.bogey.touch_tool.utils.GsonUtil;
@@ -66,7 +67,7 @@ public abstract class PinScaleAble<T> extends PinObject {
             screen = Integer.parseInt(value);
             return true;
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            AppLog.e(e);
             return false;
         }
     }

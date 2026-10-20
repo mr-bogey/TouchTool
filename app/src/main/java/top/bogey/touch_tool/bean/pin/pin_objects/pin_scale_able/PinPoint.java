@@ -11,6 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import top.bogey.touch_tool.bean.pin.pin_objects.PinType;
+import top.bogey.touch_tool.utils.AppLog;
 import top.bogey.touch_tool.utils.EAnchor;
 import top.bogey.touch_tool.utils.GsonUtil;
 
@@ -49,7 +50,7 @@ public class PinPoint extends PinScaleAble<Point> {
                 this.value = new Point(x, y);
                 return true;
             } catch (NumberFormatException e) {
-                e.printStackTrace();
+                AppLog.e(e);
             }
         }
         return false;

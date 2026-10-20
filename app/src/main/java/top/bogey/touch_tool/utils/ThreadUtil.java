@@ -1,7 +1,5 @@
 package top.bogey.touch_tool.utils;
 
-import android.util.Log;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.RejectedExecutionException;
@@ -20,7 +18,7 @@ public class ThreadUtil {
         try {
             executorService.execute(runnable);
         } catch (RejectedExecutionException e) {
-            Log.e("TAG", "execute: 线程池已满，任务未能提交", e);
+            AppLog.e("线程", "execute: 线程池已满，任务未能提交", e);
         }
     }
 

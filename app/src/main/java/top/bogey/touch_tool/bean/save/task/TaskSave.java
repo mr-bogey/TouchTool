@@ -3,6 +3,7 @@ package top.bogey.touch_tool.bean.save.task;
 import com.tencent.mmkv.MMKV;
 
 import top.bogey.touch_tool.bean.task.Task;
+import top.bogey.touch_tool.utils.AppLog;
 import top.bogey.touch_tool.utils.GsonUtil;
 
 public class TaskSave {
@@ -28,7 +29,7 @@ public class TaskSave {
             try {
                 task = GsonUtil.getAsObject(mmkv.decodeString(key), Task.class, null);
             } catch (Exception e) {
-                e.printStackTrace();
+                AppLog.e(e);
             }
         }
         time = System.currentTimeMillis();
@@ -39,7 +40,7 @@ public class TaskSave {
         try {
             return GsonUtil.getAsObject(mmkv.decodeString(key), Task.class, null);
         } catch (Exception e) {
-            e.printStackTrace();
+            AppLog.e(e);
         }
         return null;
     }

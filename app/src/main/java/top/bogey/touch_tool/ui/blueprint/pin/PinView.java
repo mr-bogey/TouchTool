@@ -3,7 +3,6 @@ package top.bogey.touch_tool.ui.blueprint.pin;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PointF;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +33,7 @@ import top.bogey.touch_tool.ui.blueprint.card.ActionCard;
 import top.bogey.touch_tool.ui.blueprint.card.IDynamicPinCard;
 import top.bogey.touch_tool.ui.blueprint.pin_slot.PinSlotView;
 import top.bogey.touch_tool.ui.blueprint.pin_widget.PinWidget;
+import top.bogey.touch_tool.utils.AppLog;
 import top.bogey.touch_tool.utils.DisplayUtil;
 
 public abstract class PinView extends FrameLayout implements PinListener {
@@ -64,7 +64,7 @@ public abstract class PinView extends FrameLayout implements PinListener {
                 slotView = constructor.newInstance(getContext(), pin);
                 slotBox.addView(slotView);
             } catch (IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
-                e.printStackTrace();
+                AppLog.e(e);
             }
         }
 
@@ -160,8 +160,8 @@ public abstract class PinView extends FrameLayout implements PinListener {
                         PinWidget<? extends PinBase> widget = widgetClass.getConstructor(Context.class, ActionCard.class, PinView.class, info.getClazz(), boolean.class).newInstance(getContext(), card, this, pin.getValue(), custom);
                         widgetBox.addView(widget);
                     } catch (Exception e) {
-                        Log.d("TAG", "refreshPin: " + info);
-                        e.printStackTrace();
+                        AppLog.d("针脚", "refreshPin: " + info);
+                        AppLog.e(e);
                     }
                 }
             }

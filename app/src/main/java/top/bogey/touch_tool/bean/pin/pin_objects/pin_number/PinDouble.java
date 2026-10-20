@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import java.text.DecimalFormat;
 
 import top.bogey.touch_tool.bean.pin.pin_objects.PinSubType;
+import top.bogey.touch_tool.utils.AppLog;
 import top.bogey.touch_tool.utils.GsonUtil;
 
 public class PinDouble extends PinNumber<Double> {
@@ -46,7 +47,7 @@ public class PinDouble extends PinNumber<Double> {
             this.value = Double.parseDouble(value);
             return true;
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            AppLog.e(e);
             return false;
         }
     }

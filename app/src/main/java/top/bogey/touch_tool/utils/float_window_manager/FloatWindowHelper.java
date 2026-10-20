@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Optional;
 
 import top.bogey.touch_tool.R;
+import top.bogey.touch_tool.utils.AppLog;
 import top.bogey.touch_tool.utils.DisplayUtil;
 import top.bogey.touch_tool.utils.EAnchor;
 
@@ -130,7 +131,7 @@ public class FloatWindowHelper {
                         }
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    AppLog.e(e);
                 }
             });
         }

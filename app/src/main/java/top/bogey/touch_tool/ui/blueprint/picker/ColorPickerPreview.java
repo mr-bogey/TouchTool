@@ -23,6 +23,7 @@ import top.bogey.touch_tool.databinding.FloatPickerColorPreviewBinding;
 import top.bogey.touch_tool.service.MainAccessibilityService;
 import top.bogey.touch_tool.ui.custom.float_view.KeepAliveFloatView;
 import top.bogey.touch_tool.ui.custom.float_view.TouchPathFloatView;
+import top.bogey.touch_tool.utils.AppLog;
 import top.bogey.touch_tool.utils.AppUtil;
 import top.bogey.touch_tool.utils.DisplayUtil;
 import top.bogey.touch_tool.utils.callback.ResultCallback;
@@ -162,7 +163,7 @@ public class ColorPickerPreview extends BasePicker<PinColor.ColorInfo> {
             int i = Integer.parseInt(s.toString());
             return Math.clamp(i, 0, 255);
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            AppLog.e(e);
             return 0;
         }
     }

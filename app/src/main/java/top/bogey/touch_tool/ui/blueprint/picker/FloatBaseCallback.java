@@ -2,12 +2,12 @@ package top.bogey.touch_tool.ui.blueprint.picker;
 
 import android.app.ActivityManager;
 import android.content.Context;
-import android.util.Log;
 import android.view.MotionEvent;
 
 import top.bogey.touch_tool.MainApplication;
 import top.bogey.touch_tool.bean.save.setting.SettingSaver;
 import top.bogey.touch_tool.ui.MainActivity;
+import top.bogey.touch_tool.utils.AppLog;
 import top.bogey.touch_tool.utils.DisplayUtil;
 import top.bogey.touch_tool.utils.float_window_manager.FloatCallback;
 import top.bogey.touch_tool.utils.float_window_manager.FloatWindow;
@@ -19,12 +19,12 @@ public class FloatBaseCallback implements FloatCallback {
 
     @Override
     public void onCreate() {
-        Log.d(TAG, "onCreate: ");
+        AppLog.d(TAG, "onCreate: ");
     }
 
     @Override
     public void onShow(String tag) {
-        Log.d(TAG, "onShow: " + tag);
+        AppLog.d(TAG, "onShow: " + tag);
         FloatWindow.hideAll(tag);
 
         MainActivity activity = MainApplication.getInstance().getActivity();
@@ -36,12 +36,12 @@ public class FloatBaseCallback implements FloatCallback {
 
     @Override
     public void onHide() {
-        Log.d(TAG, "onHide: ");
+        AppLog.d(TAG, "onHide: ");
     }
 
     @Override
     public void onDismiss() {
-        Log.d(TAG, "onDismiss: ");
+        AppLog.d(TAG, "onDismiss: ");
         if (!FloatWindow.showLast()) {
             MainActivity activity = MainApplication.getInstance().getActivity();
             if (activity != null) {
@@ -50,7 +50,7 @@ public class FloatBaseCallback implements FloatCallback {
                 try {
                     manager.moveTaskToFront(activity.getTaskId(), 0);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    AppLog.e(e);
                 }
             }
         }
@@ -58,17 +58,17 @@ public class FloatBaseCallback implements FloatCallback {
 
     @Override
     public void onDrag() {
-        Log.d(TAG, "onDrag: ");
+        AppLog.d(TAG, "onDrag: ");
     }
 
     @Override
     public void onDragEnd() {
-        Log.d(TAG, "onDragEnd: ");
+        AppLog.d(TAG, "onDragEnd: ");
     }
 
     @Override
     public void onRotate() {
-        Log.d(TAG, "onRotate: ");
+        AppLog.d(TAG, "onRotate: ");
     }
 
     @Override

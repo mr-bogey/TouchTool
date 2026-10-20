@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import top.bogey.touch_tool.utils.AppLog;
 import top.bogey.touch_tool.utils.GsonUtil;
 
 public class OcrModel extends LiteRTModel {
@@ -66,7 +67,7 @@ public class OcrModel extends LiteRTModel {
                             outputStream.write(buffer, 0, length);
                         }
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        AppLog.e(e);
                     }
 
                     modelFileCount++;
@@ -74,7 +75,7 @@ public class OcrModel extends LiteRTModel {
             }
             return modelFileCount == 1 + recConfigs.size();
         } catch (Exception e) {
-            e.printStackTrace();
+            AppLog.e(e);
             return false;
         }
     }

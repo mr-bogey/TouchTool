@@ -1,7 +1,5 @@
 package top.bogey.touch_tool.bean.save.model;
 
-import android.util.Log;
-
 import com.google.ai.edge.litert.Accelerator;
 import com.google.ai.edge.litert.CompiledModel;
 import com.google.ai.edge.litert.Environment;
@@ -14,6 +12,8 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import top.bogey.touch_tool.utils.AppLog;
+
 
 public class LiteRTModelExecutor {
     private static final List<Accelerator> accelerators = Arrays.asList(Accelerator.GPU, Accelerator.CPU);
@@ -36,22 +36,22 @@ public class LiteRTModelExecutor {
 
     public LiteRTModelExecutor(String modelPath) {
         for (Accelerator accelerator : accelerators) {
-            Log.d("TAG", "LiteRTModelExecutor: " + accelerator);
+            AppLog.d("模型", "LiteRTModelExecutor: " + accelerator);
             try {
                 model = CompiledModel.create(modelPath, new CompiledModel.Options(accelerator), ENVIRONMENT);
                 inputs = model.createInputBuffers();
                 outputs = model.createOutputBuffers();
-                Log.d("TAG", "LiteRTModelExecutor: model = " + modelPath);
+                AppLog.d("模型", "LiteRTModelExecutor: model = " + modelPath);
             } catch (LiteRtException ignored) {
-                Log.d("TAG", "LiteRTModelExecutor: model = " + modelPath + ", accelerator = " + accelerator + " not support");
+                AppLog.d("模型", "LiteRTModelExecutor: model = " + modelPath + ", accelerator = " + accelerator + " not support");
             }
         }
 
         try (Interpreter interpreter = new Interpreter(new File(modelPath))) {
             inputShape = interpreter.getInputTensor(0).shape();
             outputShape = interpreter.getOutputTensor(0).shape();
-            Log.d("TAG", "LiteRTModelExecutor: inputShape = " + Arrays.toString(inputShape));
-            Log.d("TAG", "LiteRTModelExecutor: outputShape = " + Arrays.toString(outputShape));
+            AppLog.d("模型", "LiteRTModelExecutor: inputShape = " + Arrays.toString(inputShape));
+            AppLog.d("模型", "LiteRTModelExecutor: outputShape = " + Arrays.toString(outputShape));
         } catch (Exception ignored) {
             release();
         }
@@ -63,7 +63,7 @@ public class LiteRTModelExecutor {
             model.run(inputs, outputs);
             return outputs.get(0).readFloat();
         } catch (Exception e) {
-            e.printStackTrace();
+            AppLog.e(e);
             release();
         }
         return null;

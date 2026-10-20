@@ -137,7 +137,7 @@ public class AppUtil {
             intent.setData(Uri.parse("package:" + context.getPackageName()));
             context.startActivity(intent);
         } catch (Exception e) {
-            e.printStackTrace();
+            AppLog.e(e);
         }
     }
 
@@ -148,7 +148,7 @@ public class AppUtil {
             intent.setData(Uri.parse("package:" + context.getPackageName()));
             context.startActivity(intent);
         } catch (Exception e) {
-            e.printStackTrace();
+            AppLog.e(e);
         }
     }
 
@@ -189,7 +189,7 @@ public class AppUtil {
             InetAddress address = InetAddress.getByAddress(bytes);
             gatewayIp = address.getHostAddress();
         } catch (UnknownHostException e) {
-            e.printStackTrace();
+            AppLog.e(e);
         }
 
         int ipAddress = wifiInfo.getIpAddress();
@@ -199,7 +199,7 @@ public class AppUtil {
             InetAddress address = InetAddress.getByAddress(bytes);
             ip = address.getHostAddress();
         } catch (UnknownHostException e) {
-            e.printStackTrace();
+            AppLog.e(e);
         }
         return new TaskInfoSummary.WifiInfo(wifiName, gatewayIp, ip);
     }
@@ -217,7 +217,7 @@ public class AppUtil {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(context, intent, null);
         } catch (Exception e) {
-            e.printStackTrace();
+            AppLog.e(e);
         }
     }
 
@@ -249,7 +249,7 @@ public class AppUtil {
         try {
             context.startActivity(intent, options);
         } catch (Exception e) {
-            e.printStackTrace();
+            AppLog.e(e);
         }
     }
 
@@ -260,7 +260,7 @@ public class AppUtil {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         } catch (Exception e) {
-            e.printStackTrace();
+            AppLog.e(e);
         }
     }
 

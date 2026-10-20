@@ -6,6 +6,7 @@ import androidx.annotation.Keep;
 
 import top.bogey.touch_tool.service.super_user.CmdResult;
 import top.bogey.touch_tool.service.super_user.shell.CommandShellSession;
+import top.bogey.touch_tool.utils.AppLog;
 
 public class ShizukuService extends IShizukuService.Stub {
     private CommandShellSession commandShellSession;
@@ -14,7 +15,7 @@ public class ShizukuService extends IShizukuService.Stub {
         try {
             commandShellSession = new CommandShellSession("sh");
         } catch (Exception e) {
-            e.printStackTrace();
+            AppLog.e(e);
         }
     }
 

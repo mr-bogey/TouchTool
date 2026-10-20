@@ -5,6 +5,7 @@ import androidx.annotation.Keep;
 import top.bogey.touch_tool.service.super_user.CmdResult;
 import top.bogey.touch_tool.service.super_user.ISuperUser;
 import top.bogey.touch_tool.service.super_user.shell.CommandShellSession;
+import top.bogey.touch_tool.utils.AppLog;
 import top.bogey.touch_tool.utils.callback.BooleanResultCallback;
 
 public class RootSuperUser implements ISuperUser {
@@ -54,7 +55,7 @@ public class RootSuperUser implements ISuperUser {
                 exit();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            AppLog.e(e);
             exit();
         }
     }

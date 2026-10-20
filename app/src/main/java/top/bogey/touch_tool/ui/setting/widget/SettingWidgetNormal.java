@@ -20,6 +20,8 @@ public class SettingWidgetNormal extends FrameLayout {
     public SettingWidgetNormal(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         binding = WidgetSettingNormalBinding.inflate(LayoutInflater.from(context), this, true);
+        // 分组首末行的大圆角由布局里的 app:rowCorner 标注
+        SettingRowCorner.apply(context, attrs, binding.getRoot());
 
         try (TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SettingWidgetNormal)) {
             int icon = typedArray.getResourceId(R.styleable.SettingWidgetNormal_icon, 0);

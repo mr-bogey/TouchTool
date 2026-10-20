@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.XmlResourceParser;
 import android.net.Uri;
-import android.util.Log;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -45,6 +44,7 @@ import top.bogey.touch_tool.ui.MainActivity;
 import top.bogey.touch_tool.ui.custom.float_view.ChoiceExecuteFloatView;
 import top.bogey.touch_tool.ui.play.PlayFloatView;
 import top.bogey.touch_tool.ui.play.SinglePlayView;
+import top.bogey.touch_tool.utils.AppLog;
 import top.bogey.touch_tool.utils.AppUtil;
 import top.bogey.touch_tool.utils.callback.ResultCallback;
 
@@ -64,7 +64,8 @@ public class TaskInfoSummary {
 
     private final Map<String, PackageInfo> apps = new ConcurrentHashMap<>();
     private final List<String> launcherApps = new ArrayList<>();
-
+    // 桌面应用的主界面类名缓存
+    private final Map<String, String> launcherActivities = new HashMap<>();
     private PackageActivity packageActivity = new PackageActivity("", "");
     private PackageActivity lastPackageActivity = new PackageActivity("", "");
     private final List<ResultCallback<PackageActivity>> packageActivityListeners = new ArrayList<>();
@@ -99,7 +100,7 @@ public class TaskInfoSummary {
         }
         launcherApps.sort(String::compareTo);
 
-        Log.d("TAG", "resetApps: " + apps.size());
+        AppLog.d("前台", "resetApps: " + apps.size());
     }
 
     public PackageInfo getAppInfo(String packageName) {
@@ -244,7 +245,7 @@ public class TaskInfoSummary {
                     eventType = parser.next();
                 }
             } catch (XmlPullParserException | IOException e) {
-                e.printStackTrace();
+                AppLog.e(e);
             }
         }
         return shortcuts;
@@ -284,6 +285,31 @@ public class TaskInfoSummary {
 
     public boolean isLauncherApp(String packageName) {
         return launcherApps.contains(packageName);
+    }
+
+    // 部分桌面切回桌面不发窗口状态变化事件，按激活窗口补一次桌面切换
+    public void enterLauncher(String packageName) {
+        if (packageName == null || packageName.isEmpty()) return;
+        if (!isLauncherApp(packageName)) return;
+        if (packageName.equals(packageActivity.packageName)) return;
+        String activityName = getLauncherActivity(packageName);
+        if (activityName == null) return;
+        AppLog.add(AppLog.CATEGORY_ACTIVITY, packageName, "Launcher");
+        enterActivity(packageName, activityName);
+    }
+
+    // 取桌面应用的主界面类名，取到后缓存
+    private String getLauncherActivity(String packageName) {
+        String activityName = launcherActivities.get(packageName);
+        if (activityName != null) return activityName;
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setPackage(packageName);
+        ResolveInfo resolveInfo = MainApplication.getInstance().getPackageManager().resolveActivity(intent, PackageManager.MATCH_ALL);
+        if (resolveInfo == null || resolveInfo.activityInfo == null) return null;
+        activityName = resolveInfo.activityInfo.name;
+        launcherActivities.put(packageName, activityName);
+        return activityName;
     }
 
     public void tryStartActions(Class<? extends StartAction> clazz) {
@@ -395,6 +421,8 @@ public class TaskInfoSummary {
     }
 
     public void enterActivity(String packageName, String activityName) {
+        // 桌面只按包名判定，避免窗口状态与窗口变化两条事件对同一次桌面切换各处理一遍
+        if (isLauncherApp(packageName) && packageName.equals(packageActivity.packageName)) return;
         if (isActivityClass(packageName, activityName)) {
             if (packageName.equals(MainApplication.getInstance().getPackageName()) && activityName.equals(MainActivity.class.getName())) {
                 if (lastPackageActivity != null && !packageActivity.packageName.equals(lastPackageActivity.packageName)) {

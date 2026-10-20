@@ -46,6 +46,7 @@ import top.bogey.touch_tool.ui.MainActivity;
 import top.bogey.touch_tool.ui.blueprint.card.ActionCard;
 import top.bogey.touch_tool.ui.blueprint.selecter.select_action.SelectActionDialog;
 import top.bogey.touch_tool.ui.tool.log.LogFloatView;
+import top.bogey.touch_tool.utils.AppLog;
 import top.bogey.touch_tool.utils.AppUtil;
 import top.bogey.touch_tool.utils.DisplayUtil;
 import top.bogey.touch_tool.utils.ThreadUtil;
@@ -85,7 +86,7 @@ public class BlueprintView extends Fragment {
             try {
                 manager.moveTaskToFront(blueprintView.requireActivity().getTaskId(), 0);
             } catch (Exception e) {
-                e.printStackTrace();
+                AppLog.e(e);
             }
 
             return true;

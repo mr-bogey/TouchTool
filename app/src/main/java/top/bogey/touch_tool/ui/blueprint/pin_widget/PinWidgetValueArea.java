@@ -12,6 +12,7 @@ import top.bogey.touch_tool.bean.pin.pin_objects.PinValueArea;
 import top.bogey.touch_tool.databinding.PinWidgetValueAreaBinding;
 import top.bogey.touch_tool.ui.blueprint.card.ActionCard;
 import top.bogey.touch_tool.ui.blueprint.pin.PinView;
+import top.bogey.touch_tool.utils.AppLog;
 import top.bogey.touch_tool.utils.listener.TextChangedListener;
 
 @SuppressLint("ViewConstructor")
@@ -73,7 +74,7 @@ public class PinWidgetValueArea extends PinWidget<PinValueArea> {
         try {
             return Integer.parseInt(s.toString());
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            AppLog.e(e);
             return 0;
         }
     }

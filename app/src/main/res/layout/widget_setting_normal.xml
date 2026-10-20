@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
+        android:minHeight="?attr/minTouchTargetSize"
         android:orientation="horizontal">
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -30,12 +31,15 @@
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/title"
                 style="@style/Widget.Material3.TextView.ListItem.LabelText"
+                android:layout_marginBottom="?attr/defaultOffset"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
+            <!-- 标题下与说明上各让 defaultOffset(2dp)，合计 4dp：默认字体行距下两行几乎贴在一起 -->
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/description"
                 style="@style/Widget.Material3.TextView.ListItem.TrailingSupportingText"
+                android:layout_marginTop="?attr/defaultOffset"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import top.bogey.touch_tool.utils.AppLog;
 import top.bogey.touch_tool.utils.GsonUtil;
 
 public class ModelSaver {
@@ -66,7 +67,7 @@ public class ModelSaver {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            AppLog.e(e);
         }
 
         if (liteRTModel == null) return false;

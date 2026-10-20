@@ -20,6 +20,8 @@ import top.bogey.touch_tool.databinding.WidgetSettingSliderBinding;
 public class SettingWidgetSlider extends FrameLayout {
     private final WidgetSettingSliderBinding binding;
     private final ColorStateList descriptionColor;
+    // 展开时滑条自上而下划出的动画
+    private final SettingRevealAnimator reveal;
     // 是否默认收起滑条，只在展开时才占一行高度
     private final boolean collapsible;
 
@@ -33,6 +35,9 @@ public class SettingWidgetSlider extends FrameLayout {
     public SettingWidgetSlider(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         binding = WidgetSettingSliderBinding.inflate(LayoutInflater.from(context), this, true);
+        // 分组首末行的大圆角由布局里的 app:rowCorner 标注
+        SettingRowCorner.apply(context, attrs, binding.getRoot());
+        reveal = new SettingRevealAnimator(binding.sliderBox);
         descriptionColor = binding.description.getTextColors();
 
         try (TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SettingWidgetSlider)) {
@@ -61,7 +66,7 @@ public class SettingWidgetSlider extends FrameLayout {
         // 可折叠时整行点击切换展开，右侧箭头提示方向
         if (collapsible) {
             binding.arrow.setVisibility(VISIBLE);
-            binding.getRoot().setOnClickListener(v -> setExpanded(!expanded));
+            binding.getRoot().setOnClickListener(v -> setExpanded(!expanded, true));
             // 收起态要实时显示当前值
             binding.slider.addOnChangeListener((slider, value, fromUser) -> refreshDescription());
         }
@@ -77,7 +82,7 @@ public class SettingWidgetSlider extends FrameLayout {
                 @Override
                 public boolean onPreDraw() {
                     getViewTreeObserver().removeOnPreDrawListener(this);
-                    setExpanded(false);
+                    setExpanded(false, false);
                     return true;
                 }
             });
@@ -109,13 +114,19 @@ public class SettingWidgetSlider extends FrameLayout {
         refreshDescription();
     }
 
-    // 展开态显示说明，收起态显示当前值
-    private void setExpanded(boolean value) {
+    // 展开态显示说明，收起态显示当前值；展开时滑条自上而下划出
+    private void setExpanded(boolean value, boolean animate) {
         if (!collapsible) return;
         expanded = value;
         binding.arrow.setImageResource(value ? R.drawable.icon_keyboard_arrow_up : R.drawable.icon_keyboard_arrow_down);
-        binding.sliderBox.setVisibility(value ? VISIBLE : GONE);
-        refreshDescription();
+        if (value) {
+            // 说明文字先换成展开态，再让滑条划出
+            refreshDescription();
+            reveal.apply(true, animate);
+        } else {
+            // 收起动画结束后再换回当前值，文字不跟着缩
+            reveal.apply(false, animate, this::refreshDescription);
+        }
     }
 
     private void refreshDescription() {

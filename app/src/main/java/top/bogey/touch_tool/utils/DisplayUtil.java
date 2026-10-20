@@ -16,7 +16,6 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.Size;
 import android.view.View;
 import android.view.ViewGroup;
@@ -390,7 +389,7 @@ public class DisplayUtil {
         MatchResult matchResult = nativeMatchTemplate(bitmap, template, (int) Math.pow(2, speed), canny);
         if (tmp != null) tmp.recycle();
         if (matchResult == null) return null;
-        Log.d("TAG", "matchTemplateResult: value = " + matchResult.value);
+        AppLog.d("图像", "matchTemplateResult: value = " + matchResult.value);
         if (matchResult.value * 100 < similarity) return null;
         matchResult.area.offset(area.left, area.top);
         return matchResult;

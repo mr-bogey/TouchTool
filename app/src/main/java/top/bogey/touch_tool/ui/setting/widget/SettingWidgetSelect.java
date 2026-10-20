@@ -28,6 +28,8 @@ public class SettingWidgetSelect extends FrameLayout {
     private final WidgetSettingSelectBinding binding;
     private final ColorStateList descriptionColor;
     private final GradientDrawable cornerBackground = new GradientDrawable();
+    // 展开时按钮组自上而下划出的动画
+    private final SettingRevealAnimator reveal;
     // 是否默认收起按钮组，只在展开时才占一行高度
     private final boolean collapsible;
 
@@ -40,6 +42,9 @@ public class SettingWidgetSelect extends FrameLayout {
     public SettingWidgetSelect(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         binding = WidgetSettingSelectBinding.inflate(LayoutInflater.from(context), this, true);
+        // 分组首末行的大圆角由布局里的 app:rowCorner 标注
+        SettingRowCorner.apply(context, attrs, binding.getRoot());
+        reveal = new SettingRevealAnimator(binding.group);
         descriptionColor = binding.description.getTextColors();
         cornerBackground.setShape(GradientDrawable.RECTANGLE);
         cornerBackground.setCornerRadius(dimen(R.attr.smallIconButtonSize) / 2f);
@@ -72,7 +77,7 @@ public class SettingWidgetSelect extends FrameLayout {
         // 可折叠时整行点击切换展开，右侧箭头提示方向
         if (collapsible) {
             binding.arrow.setVisibility(VISIBLE);
-            binding.getRoot().setOnClickListener(v -> setExpanded(!expanded));
+            binding.getRoot().setOnClickListener(v -> setExpanded(!expanded, true));
             // 收起态要显示当前档位文案
             binding.group.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
                 if (!isChecked) return;
@@ -92,7 +97,7 @@ public class SettingWidgetSelect extends FrameLayout {
                 @Override
                 public boolean onPreDraw() {
                     getViewTreeObserver().removeOnPreDrawListener(this);
-                    setExpanded(false);
+                    setExpanded(false, false);
                     return true;
                 }
             });
@@ -134,13 +139,19 @@ public class SettingWidgetSelect extends FrameLayout {
         check(child.getId());
     }
 
-    // 展开态显示说明，收起态显示当前档位
-    private void setExpanded(boolean value) {
+    // 展开态显示说明，收起态显示当前档位；展开时按钮组自上而下划出
+    private void setExpanded(boolean value, boolean animate) {
         if (!collapsible) return;
         expanded = value;
         binding.arrow.setImageResource(value ? R.drawable.icon_keyboard_arrow_up : R.drawable.icon_keyboard_arrow_down);
-        binding.group.setVisibility(value ? VISIBLE : GONE);
-        refreshDescription();
+        if (value) {
+            // 说明文字先换成展开态，再让按钮组划出
+            refreshDescription();
+            reveal.apply(true, animate);
+        } else {
+            // 收起动画结束后再换回当前档位，文字不跟着缩
+            reveal.apply(false, animate, this::refreshDescription);
+        }
     }
 
     // 取主题里定义的尺寸，避免在代码里写死 dp

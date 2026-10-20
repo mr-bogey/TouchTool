@@ -20,6 +20,7 @@ import top.bogey.touch_tool.bean.other.log.NormalLog;
 import top.bogey.touch_tool.bean.save.setting.SettingSaver;
 import top.bogey.touch_tool.bean.save.log.LogSaver;
 import top.bogey.touch_tool.bean.task.Task;
+import top.bogey.touch_tool.utils.AppLog;
 
 public class TaskRunnable implements Runnable {
     private final Stack<TaskContext> taskContextStack = new Stack<>();
@@ -64,7 +65,7 @@ public class TaskRunnable implements Runnable {
                 if (result) listeners.stream().filter(Objects::nonNull).forEach(listener -> listener.onStart(this));
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            AppLog.e(e);
 
             String errorInfo = e.toString();
             try {
@@ -83,7 +84,7 @@ public class TaskRunnable implements Runnable {
             }
             if (logged) addLog(new LogInfo(new DateTimeLog()), 0);
         } catch (Exception e) {
-            e.printStackTrace();
+            AppLog.e(e);
         } finally {
             interrupt = true;
             listeners.stream().filter(Objects::nonNull).forEach(listener -> listener.onFinish(this));
@@ -220,7 +221,7 @@ public class TaskRunnable implements Runnable {
                     }
                 }
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                AppLog.e(e);
             }
         }
     }
