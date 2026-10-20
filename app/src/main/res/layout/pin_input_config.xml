@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="?attr/defaultPadding"
     android:layout_marginVertical="?attr/defaultOffset"
@@ -10,9 +10,10 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="?attr/defaultPadding"
+        android:layout_marginEnd="?attr/defaultOffset"
+        android:layout_weight="1"
         android:maxLines="1"
         android:textAppearance="@style/TextAppearance.Material3.BodySmall" />
 
