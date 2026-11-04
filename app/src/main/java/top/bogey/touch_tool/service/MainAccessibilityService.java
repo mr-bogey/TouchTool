@@ -633,6 +633,7 @@ public class MainAccessibilityService extends AccessibilityService {
         broadcastReceivers.remove(key);
     }
 
+    @SuppressWarnings("deprecation")
     public void addBroadcast(Task task, BroadcastStartAction broadcastStartAction) {
         if (task == null || broadcastStartAction == null) return;
         if (!broadcastStartAction.isEnable()) return;
@@ -640,9 +641,10 @@ public class MainAccessibilityService extends AccessibilityService {
         if (!isEnabled()) return;
 
         String key = task.getId() + broadcastStartAction.getId();
-        BroadcastReceiver receiver = broadcastReceivers.get(key);
-        if (receiver != null) return;
-        receiver = new BroadcastReceiver() {
+        // 同一个触发器多次注册时先摘掉旧的，否则改了监听广播名后旧过滤器残留、新名字收不到
+        BroadcastReceiver oldReceiver = broadcastReceivers.remove(key);
+        if (oldReceiver != null) unregisterReceiver(oldReceiver);
+        BroadcastReceiver receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 String action = intent.getAction();
@@ -654,7 +656,9 @@ public class MainAccessibilityService extends AccessibilityService {
                 Bundle bundle = intent.getExtras();
                 if (bundle != null) {
                     for (String name : bundle.keySet()) {
-                        extras.put(name, bundle.getString(name));
+                        // extra 可能是 int/bool 等非字符串类型，getString 会静默取到 null
+                        Object value = bundle.get(name);
+                        if (value != null) extras.put(name, String.valueOf(value));
                     }
                 }
                 TaskInfoSummary.getInstance().setBroadcastInfo(action, data, extras);

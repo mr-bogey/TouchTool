@@ -21,21 +21,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import top.bogey.touch_tool.MainApplication;
 import top.bogey.touch_tool.R;
 import top.bogey.touch_tool.bean.action.Action;
 import top.bogey.touch_tool.bean.action.number.MathExpressionAction;
-import top.bogey.touch_tool.bean.action.parent.DynamicPinsAction;
 import top.bogey.touch_tool.bean.action.task.ExecuteTaskAction;
-import top.bogey.touch_tool.bean.pin.Pin;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinSubType;
-import top.bogey.touch_tool.bean.pin.pin_objects.pin_number.PinDouble;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_string.PinAutoPinString;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_string.PinFileContentString;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_string.PinNodePathString;
@@ -216,7 +209,7 @@ public class PinWidgetString extends PinWidget<PinString> {
                         if (Objects.equals(s.toString(), pinBase.getValue())) return;
                         pinBase.setValue(s.toString());
                         pinView.getPin().notifyValueUpdated(card.getTask());
-                        resetDynamicPin(s.toString());
+                        resetDynamicPin();
                     }
                 });
             }
@@ -349,40 +342,10 @@ public class PinWidgetString extends PinWidget<PinString> {
         return ringtone.getTitle(getContext());
     }
 
-    private void resetDynamicPin(String value) {
-        if (card.getAction() instanceof DynamicPinsAction dynamicPinsAction) {
-            Matcher matcher = null;
-            if (dynamicPinsAction instanceof MathExpressionAction) {
-                Pattern pattern = AppUtil.getPattern("\\b([a-zA-Z])\\b");
-                if (pattern != null) matcher = pattern.matcher(value);
-            }
-
-            List<String> keys = new ArrayList<>();
-            if (matcher != null) {
-                while (matcher.find()) {
-                    String key = matcher.group(1);
-                    if (keys.contains(key)) continue;
-                    keys.add(key);
-                }
-            }
-
-            List<Pin> removePins = new ArrayList<>();
-            for (Pin dynamicPin : dynamicPinsAction.getDynamicPins()) {
-                String title = dynamicPin.getTitle();
-                if (keys.isEmpty()) removePins.add(dynamicPin);
-                else if (!keys.remove(title)) removePins.add(dynamicPin);
-            }
-            removePins.forEach(card::removePin);
-
-            for (String key : keys) {
-                Pin pin = null;
-                if (dynamicPinsAction instanceof MathExpressionAction) {
-                    pin = new Pin(new PinDouble(), 0, false, true, false);
-                }
-                if (pin == null) break;
-                pin.setTitle(key);
-                card.addPin(pin);
-            }
-        }
+    /**
+     * 公式文本变化后，让动作按文本重新解析动态针脚
+     */
+    private void resetDynamicPin() {
+        if (card.getAction() instanceof MathExpressionAction action) action.resetDynamicPins(card.getTask());
     }
 }

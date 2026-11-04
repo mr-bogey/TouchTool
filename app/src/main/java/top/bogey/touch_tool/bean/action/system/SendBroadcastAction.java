@@ -53,13 +53,11 @@ public class SendBroadcastAction extends ExecuteAction {
 
         Intent intent = new Intent(action.getValue());
 
+        // 广播只按包限定投递：app 针脚给出的是 activity，指向组件的显式广播动态注册的接收器收不到
         PinApplication app = getPinValue(runnable, appPin);
-        String packageName = app.getPackageName();
-        String activity = app.getFirstActivity();
-        if (activity == null || activity.isEmpty()) {
+        String packageName = app == null ? null : app.getPackageName();
+        if (packageName != null && !packageName.isEmpty()) {
             intent.setPackage(packageName);
-        } else {
-            intent.setClassName(packageName, activity);
         }
 
         PinList category = getPinValue(runnable, categoryPin);
@@ -79,7 +77,10 @@ public class SendBroadcastAction extends ExecuteAction {
         extras.forEach((key, value) -> OpenAppAction.putBundle(bundle, key.toString(), value.toString()));
         intent.putExtras(bundle);
 
-        Context context = MainApplication.getInstance().getService();
+        // 发送广播不依赖无障碍服务存活，服务断连时退回 Application 作为 context
+        MainApplication application = MainApplication.getInstance();
+        Context context = application.getService();
+        if (context == null) context = application;
         context.sendBroadcast(intent);
         executeNext(runnable, outPin);
     }

@@ -27,4 +27,6 @@
 
 - **开关任务**：`SwitchTaskAction` 的任务针脚是 `ALL_TASK_ID`（`NotLinkAblePin`，可选到全部任务）；任务针脚按 id 用 `TaskSaver.getTask()` 直接取存档任务（与 `StopTaskAction` 同款，不做 `upFindTask` 上溯），运行中的任务只是副本、开始动作的真实数据在存档里，开关与保存必须落在存档任务上；关闭任务后要用 `FloatWindow.getView(PlayFloatView.class.getName())`（单按钮悬浮窗看 `getViews(SinglePlayView.class)`）判断悬浮窗是否显示着，显示着才调 `TaskInfoSummary.tryShowManualPlayView(true)` 刷新，否则手动执行悬浮窗上还留着已关闭的任务、或者悬浮窗被凭空弹出来；`tryShowManualPlayView(false)` 会清空列表使悬浮窗收起，不能用来刷新。
 
+- **广播收发**：发送侧只按 `setPackage` 做包限定——app 针脚给的是 activity，用 `setClassName` 会变成指向组件的显式广播，动态注册的接收器永远收不到；app 针脚为空则发全局隐式广播；context 优先用无障碍服务，服务不在时退回 `MainApplication`。接收侧 `broadcastReceivers` 以 `taskId + actionId` 为键，重复注册必须先把旧接收器注销，否则改了触发器的广播名后旧过滤器残留、新名字收不到，只能重启服务；extras 用 `bundle.get()` 转字符串，`getString` 会把 int/bool 取成 null。
+
 - **NodePicker**：选中结果没有快照回退——`roots` 由 `NodeInfo.getWindows()` 现场抓取，打开前已被移除的控件找不回（`findNode` 返回 null），只有手动导入 .ttl 才走离线树；打开后才移除的反而选得到，因为整棵树在构造时已物化冻结。已知隐患：`getChildCount()` 实时而 `getChild(i)` 优先返回缓存，会跳过末尾节点或错位返回兄弟节点；`PinNode.nodeInfo` 是 `transient`，选中结果不参与序列化。

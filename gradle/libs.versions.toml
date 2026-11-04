@@ -1,13 +1,13 @@
 [versions]
 appcompat = "1.8.0"
 material = "1.14.0"
-nav = "2.10.0"
-agp = "9.3.2"
+nav = "2.10.2"
+agp = "9.4.1"
 
 #序列化与反序列化
 gson = "2.14.0"
 #存储
-mmkv = "2.4.2"
+mmkv = "2.4.3"
 
 # 自动换行的流式布局
 flexbox = "3.0.0"
@@ -20,10 +20,10 @@ zxing = "3.5.0"
 # 拼音
 tinypinyin = "2.0.3"
 # 隐藏api
-hiddenapibypass = "6.1"
+hiddenapibypass = "6.2"
 
 # 端侧模型运行环境
-litert = "2.1.5"
+litert = "2.3.0"
 
 [libraries]
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
