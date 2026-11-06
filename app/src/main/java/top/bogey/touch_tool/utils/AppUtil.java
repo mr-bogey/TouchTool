@@ -663,7 +663,7 @@ public class AppUtil {
         if (image == null) return;
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setType("image/*");
+        intent.setType("image/jpeg");
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
@@ -672,20 +672,26 @@ public class AppUtil {
         if (uri != null) {
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             intent.putExtra(Intent.EXTRA_STREAM, uri);
-            context.startActivity(intent);
+            // 统一走 createChooser 才会拉起系统分享面板；flag 要加在 chooser 上，里层 intent 的不会带过去
+            Intent chooser = Intent.createChooser(intent, null);
+            chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(chooser);
         }
     }
 
     public static void shareText(Context context, String text) {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setType("text/*");
+        intent.setType("text/plain");
 
         Uri uri = writeCacheFile(context, DOCUMENT_DIR_NAME, "Text_" + formatDateTime(context, System.currentTimeMillis(), false, true) + ".txt", text.getBytes());
         if (uri != null) {
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             intent.putExtra(Intent.EXTRA_STREAM, uri);
-            context.startActivity(intent);
+            // 统一走 createChooser 才会拉起系统分享面板；flag 要加在 chooser 上，里层 intent 的不会带过去
+            Intent chooser = Intent.createChooser(intent, null);
+            chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(chooser);
         }
     }
 
