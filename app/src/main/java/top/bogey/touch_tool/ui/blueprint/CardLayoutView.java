@@ -239,9 +239,10 @@ public class CardLayoutView extends FrameLayout implements TaskSaveListener, Var
     }
 
     public ActionCard newCard(Action action) {
-        ActionInfo info = ActionInfo.getActionInfo(action.getType());
+        // 必须按实例查：外部扩展节点的 type 为 EXTENSION，靠 extensionKey 才能命中注册信息
+        ActionInfo info = ActionInfo.getActionInfo(action);
         try {
-            assert info != null;
+            if (info == null) throw new IllegalStateException("未注册的外部节点，缺少 ActionInfo：extensionKey = " + action.getExtensionKey() + ", class = " + action.getClass().getName());
             Constructor<? extends ActionCard> constructor = info.getCardClass().getConstructor(Context.class, Task.class, Action.class);
             return constructor.newInstance(getContext(), task, action);
         } catch (Exception e) {
@@ -307,6 +308,8 @@ public class CardLayoutView extends FrameLayout implements TaskSaveListener, Var
         }
         card.getAction().setPos((int) ((x - offsetX) / getScaleGridSize()), (int) ((y - offsetY) / getScaleGridSize()));
         updateCardPos(card);
+        // 首帧加卡时卡片尚未布局，setNeedDraw 可能基于零尺寸误判；布局完成后再用真实几何重算一次可见性
+        card.post(() -> updateCardPos(card));
     }
 
     public void updateCardPos(ActionCard card) {
@@ -318,6 +321,14 @@ public class CardLayoutView extends FrameLayout implements TaskSaveListener, Var
         float y = pos.y * getScaleGridSize() + offsetY;
         card.updateCardPos(x, y);
 
+        // 未布局（宽高为 0）时，getCardArea 退化为一个点，极易被误判为"在窗口外"而被裁剪隐藏。
+        // 新任务/首帧加卡时卡片尚未走布局，此时不应裁剪；等布局完成后再由 onLayout(changed) 或下方 post 重算。
+        int cardW = card.getWidth();
+        int cardH = card.getHeight();
+        if (cardW <= 0 || cardH <= 0) {
+            card.setNeedDraw(true);
+            return;
+        }
         RectF area = getCardArea(card);
         area.offset(offsetX, offsetY);
         RectF windowSize = new RectF(0, 0, getWidth(), getHeight());
