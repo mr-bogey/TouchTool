@@ -58,7 +58,7 @@ public class ShareToAction extends ExecuteAction {
                 byte[] bytes = new byte[0];
                 if (value instanceof PinImage image) {
                     fileName = "Picture_" + AppUtil.formatDateTime(context, System.currentTimeMillis(), false, true) + ".jpg";
-                    intent.setType("image/*");
+                    intent.setType("image/jpeg");
                     Bitmap bitmap = image.getImage();
                     if (bitmap != null) {
                         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -67,7 +67,7 @@ public class ShareToAction extends ExecuteAction {
                     }
                 } else {
                     fileName = "Text_" + AppUtil.formatDateTime(context, System.currentTimeMillis(), false, true) + ".txt";
-                    intent.setType("text/*");
+                    intent.setType("text/plain");
                     bytes = value.toString().getBytes();
                 }
                 Uri uri = AppUtil.writeCacheFile(context, AppUtil.DOCUMENT_DIR_NAME, fileName, bytes);

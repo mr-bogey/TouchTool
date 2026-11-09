@@ -114,13 +114,16 @@ public class ExportTaskDialog extends FrameLayout {
 
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.setType("text/*");
+            intent.setType("application/octet-stream");
 
             Uri uri = AppUtil.writeCacheFile(context, AppUtil.TASK_DIR_NAME, filename + ".tt", json.getBytes());
             if (uri != null) {
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 intent.putExtra(Intent.EXTRA_STREAM, uri);
-                context.startActivity(intent);
+                // 走 createChooser 才会拉起系统分享面板；FLAG_ACTIVITY_NEW_TASK 要加在 chooser 上，里层 intent 的 flag 不会带过去
+                Intent chooser = Intent.createChooser(intent, null);
+                chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(chooser);
             }
         });
     }
