@@ -17,6 +17,7 @@ import java.util.Map;
 import top.bogey.touch_tool.MainApplication;
 import top.bogey.touch_tool.R;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinAdd;
+import top.bogey.touch_tool.bean.pin.pin_objects.PinAny;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinBase;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinBoolean;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinMap;
@@ -89,6 +90,9 @@ public class PinInfo {
     private final static PinInfo OBJECT_INFO = new PinInfo(PinType.OBJECT, PinSubType.NORMAL, PinObject.class, NormalPinSlotView.class, 0, com.google.android.material.R.attr.colorPrimaryInverse, R.string.pin_object, null, false, false);
     private final static PinInfo DYNAMIC_OBJECT_INFO = new PinInfo(PinType.OBJECT, PinSubType.DYNAMIC, PinObject.class, NormalPinSlotView.class, 0, com.google.android.material.R.attr.colorPrimaryInverse, R.string.pin_object, null, false, false);
 
+    // 任意值针脚：复用普通槽位，无独立编辑控件；customAble=true 使变量/列表元素/字典键值/自定义针脚的类型清单可选任意值
+    private final static PinInfo ANY_INFO = new PinInfo(PinType.ANY, PinSubType.NORMAL, PinAny.class, NormalPinSlotView.class, 0, com.google.android.material.R.attr.colorPrimaryInverse, R.string.pin_any, null, true, false);
+
     private final static PinInfo LIST_INFO = new PinInfo(PinType.LIST, PinSubType.NORMAL, PinList.class, ListPinSlotView.class, 0, com.google.android.material.R.attr.colorPrimaryInverse, R.string.pin_list, null, false, false);
     private final static PinInfo MULTI_SELECT_INFO = new PinInfo(PinType.LIST, PinSubType.MULTI_SELECT, PinMultiSelect.class, ListPinSlotView.class, 0, com.google.android.material.R.attr.colorPrimaryInverse, R.string.pin_multi_select, PinWidgetList.class, false, false);
 
@@ -152,6 +156,7 @@ public class PinInfo {
                     case DYNAMIC -> info = DYNAMIC_OBJECT_INFO;
                 }
             }
+            case ANY -> info = ANY_INFO;
             case LIST -> {
                 switch (subType) {
                     case NORMAL -> info = LIST_INFO;

@@ -9,6 +9,7 @@ public enum PinType {
 
     // 值类型
     OBJECT,
+    ANY,
 
     LIST,
     MAP,
