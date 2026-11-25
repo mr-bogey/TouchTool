@@ -157,6 +157,7 @@
     <string name="pin_add_execute">添加执行</string>
 
     <string name="pin_object">对象</string>
+    <string name="pin_any">任意值</string>
 
     <string name="pin_list">列表</string>
     <string name="pin_list_app">应用列表</string>

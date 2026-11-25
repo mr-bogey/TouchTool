@@ -72,7 +72,12 @@ import top.bogey.touch_tool.bean.action.logic.SequenceExecuteAction;
 import top.bogey.touch_tool.bean.action.logic.SwitchAction;
 import top.bogey.touch_tool.bean.action.logic.WaitConditionAction;
 import top.bogey.touch_tool.bean.action.logic.WhileLoopAction;
+import top.bogey.touch_tool.bean.action.map.BoxValueAction;
+import top.bogey.touch_tool.bean.action.map.BuildObjectAction;
+import top.bogey.touch_tool.bean.action.map.GetValueItemAction;
+import top.bogey.touch_tool.bean.action.map.GetValueTypeAction;
 import top.bogey.touch_tool.bean.action.map.MakeMapAction;
+import top.bogey.touch_tool.bean.action.map.UnboxValueAction;
 import top.bogey.touch_tool.bean.action.map.MapAppendAction;
 import top.bogey.touch_tool.bean.action.map.MapClearAction;
 import top.bogey.touch_tool.bean.action.map.MapContainKeyAction;
@@ -142,6 +147,7 @@ import top.bogey.touch_tool.bean.action.string.FindOcrTextAction;
 import top.bogey.touch_tool.bean.action.string.GetOcrTextAction;
 import top.bogey.touch_tool.bean.action.string.IsOcrTextExistAction;
 import top.bogey.touch_tool.bean.action.string.ParseJsonAction;
+import top.bogey.touch_tool.bean.action.string.ParseJsonSafeAction;
 import top.bogey.touch_tool.bean.action.string.StringAppendAction;
 import top.bogey.touch_tool.bean.action.string.StringDecodeAction;
 import top.bogey.touch_tool.bean.action.string.StringEncodeAction;
@@ -327,6 +333,12 @@ public class ActionInfo {
     private final static ActionInfo IS_OCR_TEXT_EXIST_INFO = new ActionInfo(ActionType.IS_OCR_TEXT_EXIST, IsOcrTextExistAction.class, R.drawable.icon_document_scanner, R.string.is_ocr_text_exist_action, R.string.is_ocr_text_exist_action_desc, 0, NormalActionCard.class);
     private final static ActionInfo FIND_OCR_TEXT_INFO = new ActionInfo(ActionType.FIND_OCR_TEXT, FindOcrTextAction.class, R.drawable.icon_document_scanner, R.string.find_ocr_text_action, R.string.find_ocr_text_action_desc, 0, NormalActionCard.class);
     private final static ActionInfo PARSE_JSON_INFO = new ActionInfo(ActionType.PARSE_JSON, ParseJsonAction.class, R.drawable.icon_text_fields, R.string.parse_json_action, R.string.parse_json_action_desc, 0, NormalActionCard.class);
+    private final static ActionInfo PARSE_JSON_SAFE_INFO = new ActionInfo(ActionType.PARSE_JSON_SAFE, ParseJsonSafeAction.class, R.drawable.icon_text_fields, R.string.parse_json_safe_action, R.string.parse_json_safe_action_desc, 0, NormalActionCard.class);
+    private final static ActionInfo BOX_VALUE_INFO = new ActionInfo(ActionType.BOX_VALUE, BoxValueAction.class, R.drawable.icon_output, R.string.box_value_action, R.string.box_value_action_desc, 0, NormalActionCard.class);
+    private final static ActionInfo UNBOX_VALUE_INFO = new ActionInfo(ActionType.UNBOX_VALUE, UnboxValueAction.class, R.drawable.icon_input, R.string.unbox_value_action, R.string.unbox_value_action_desc, 0, NormalActionCard.class);
+    private final static ActionInfo GET_VALUE_TYPE_INFO = new ActionInfo(ActionType.GET_VALUE_TYPE, GetValueTypeAction.class, R.drawable.icon_help, R.string.get_value_type_action, R.string.get_value_type_action_desc, 0, NormalActionCard.class);
+    private final static ActionInfo GET_VALUE_ITEM_INFO = new ActionInfo(ActionType.GET_VALUE_ITEM, GetValueItemAction.class, R.drawable.icon_search, R.string.get_value_item_action, R.string.get_value_item_action_desc, 0, NormalActionCard.class);
+    private final static ActionInfo BUILD_OBJECT_INFO = new ActionInfo(ActionType.BUILD_OBJECT, BuildObjectAction.class, R.drawable.icon_add, R.string.build_object_action, R.string.build_object_action_desc, 0, NormalActionCard.class);
     private final static ActionInfo STRING_TO_SINGLE_SELECT_INFO = new ActionInfo(ActionType.STRING_TO_SINGLE_SELECT, StringToSingleSelectAction.class, R.drawable.icon_text_fields, R.string.string_to_single_select_action, R.string.string_to_single_select_action_desc, 0, NormalActionCard.class);
 
 
@@ -558,6 +570,12 @@ public class ActionInfo {
             case FIND_OCR_TEXT -> FIND_OCR_TEXT_INFO;
             case IS_OCR_TEXT_EXIST -> IS_OCR_TEXT_EXIST_INFO;
             case PARSE_JSON -> PARSE_JSON_INFO;
+            case PARSE_JSON_SAFE -> PARSE_JSON_SAFE_INFO;
+            case BOX_VALUE -> BOX_VALUE_INFO;
+            case UNBOX_VALUE -> UNBOX_VALUE_INFO;
+            case GET_VALUE_TYPE -> GET_VALUE_TYPE_INFO;
+            case GET_VALUE_ITEM -> GET_VALUE_ITEM_INFO;
+            case BUILD_OBJECT -> BUILD_OBJECT_INFO;
             case STRING_TO_SINGLE_SELECT -> STRING_TO_SINGLE_SELECT_INFO;
 
 

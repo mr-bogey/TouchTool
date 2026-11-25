@@ -145,6 +145,7 @@ public class ActionMap {
                     ActionType.FIND_OCR_TEXT,
                     ActionType.IS_OCR_TEXT_EXIST,
                     ActionType.PARSE_JSON,
+                    ActionType.PARSE_JSON_SAFE,
                     ActionType.STRING_FROM_OBJECT,
                     ActionType.STRING_TO_SINGLE_SELECT
             ));
@@ -249,7 +250,12 @@ public class ActionMap {
                     ActionType.MAP_APPEND,
                     ActionType.MAP_CLEAR,
                     ActionType.MAP_KEYS,
-                    ActionType.MAP_VALUES
+                    ActionType.MAP_VALUES,
+                    ActionType.BOX_VALUE,
+                    ActionType.UNBOX_VALUE,
+                    ActionType.GET_VALUE_TYPE,
+                    ActionType.GET_VALUE_ITEM,
+                    ActionType.BUILD_OBJECT
             ));
         }
         return list;

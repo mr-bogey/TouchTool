@@ -166,6 +166,16 @@
         <item>并行执行</item>
     </string-array>
 
+    <string-array name="unbox_target_type">
+        <item>字符串</item>
+        <item>数字</item>
+        <item>布尔</item>
+        <item>列表</item>
+        <item>字典</item>
+        <item>图片</item>
+        <item>对象</item>
+    </string-array>
+
     <string-array name="manual_action_show_type">
         <item>集合显示</item>
         <item>单独显示</item>

@@ -487,6 +487,23 @@
 
     <string name="parse_json_action">JSON解析</string>
     <string name="parse_json_action_desc">解析JSON字符串</string>
+    <string name="parse_json_safe_action">JSON解析(安全)</string>
+    <string name="parse_json_safe_action_desc">解析JSON字符串，失败走失败分支并输出错误信息</string>
+    <string name="box_value_action">装箱</string>
+    <string name="box_value_action_desc">把任意类型的值包装为任意值(值包)</string>
+    <string name="unbox_value_action">拆箱</string>
+    <string name="unbox_value_action_desc">把任意值按目标类型拆出，类型不符走失败分支</string>
+    <string name="get_value_type_action">值类型判断</string>
+    <string name="get_value_type_action_desc">输出任意值当前的类型名，可接条件分派</string>
+    <string name="get_value_item_action">取字段/取下标</string>
+    <string name="get_value_item_action_desc">读取字典字段或列表下标，失败走失败分支</string>
+    <string name="build_object_action">组对象</string>
+    <string name="build_object_action_desc">向字典写入键值或向列表追加值，可串联组对象</string>
+    <string name="action_fail">失败</string>
+    <string name="action_error">错误信息</string>
+    <string name="pin_target_type">目标类型</string>
+    <string name="pin_item_key">键/下标</string>
+    <string name="pin_base_object">基础对象</string>
 
     <string name="string_to_single_select_action">新建单选</string>
     <string name="string_to_single_select_action_desc">创建一个自定义单选</string>
