@@ -239,14 +239,16 @@ public class CardLayoutView extends FrameLayout implements TaskSaveListener, Var
     }
 
     public ActionCard newCard(Action action) {
-        // 必须按实例查：外部扩展节点的 type 为 EXTENSION，靠 extensionKey 才能命中注册信息
-        ActionInfo info = ActionInfo.getActionInfo(action);
+        ActionInfo info = ActionInfo.getActionInfo(action.getType());
+        // 守卫提前抛出：不要放进下面的 try，否则会被 catch(Exception) 吞成 RuntimeException，丢失类型与消息
+        if (info == null) {
+            throw new IllegalStateException("未注册的节点类型：" + action.getType() + "，class = " + action.getClass().getName());
+        }
         try {
-            if (info == null) throw new IllegalStateException("未注册的外部节点，缺少 ActionInfo：extensionKey = " + action.getExtensionKey() + ", class = " + action.getClass().getName());
             Constructor<? extends ActionCard> constructor = info.getCardClass().getConstructor(Context.class, Task.class, Action.class);
             return constructor.newInstance(getContext(), task, action);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException("无法实例化节点卡片：" + action.getClass().getName(), e);
         }
     }
 
